@@ -42,7 +42,7 @@ const CreateFillableForm = () => {
   }
 
   return (
-    <div className="w-full space-y-[76px] py-7">
+    <div className="w-full space-y-[76px] pb-14 pt-7">
       <CreateFillableFormHeader title={form?.title} />
       <FillableForm form={form} />
     </div>

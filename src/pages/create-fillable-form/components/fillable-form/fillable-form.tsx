@@ -31,6 +31,9 @@ const FillableForm: FC<{ form?: FillableFormEntity }> = ({ form }) => {
     shouldFocusError: false,
   })
 
+  const isSubmitButtonDisabled =
+    !methods.formState.isDirty || addFillableForm.isPending || editFillableForm.isPending
+
   const {
     fields: containers,
     append,
@@ -97,9 +100,9 @@ const FillableForm: FC<{ form?: FillableFormEntity }> = ({ form }) => {
             Додати блок
           </Button>
         </div>
-        <div className="flex justify-end">
-          <Button type="submit" className="max-w-60" disabled={!methods.formState.isDirty}>
-            {form ? "Редагувати" : "Сохранить"}
+        <div className="flex justify-center">
+          <Button type="submit" className="mx-auto max-w-[600px]" disabled={isSubmitButtonDisabled}>
+            {form ? "Редагувати" : "Зберегти"}
           </Button>
         </div>
       </form>
