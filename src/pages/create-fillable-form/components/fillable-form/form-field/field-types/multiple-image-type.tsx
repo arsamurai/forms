@@ -1,0 +1,114 @@
+import { FC } from "react"
+import { Controller, useFormContext } from "react-hook-form"
+
+import { FillableFormSchema } from "@services/fillable-forms-service"
+
+import { Input, Select } from "@shared/ui/fields"
+
+import { fileTypes } from "./сonstants/file-types.constants"
+import { folderHierarchy } from "./сonstants/folder-hierarchy.constants"
+
+const MultipleImageType: FC<{ containerIndex: number; fieldIndex: number }> = ({
+  containerIndex,
+  fieldIndex,
+}) => {
+  const {
+    register,
+    control,
+    formState: { errors },
+  } = useFormContext<FillableFormSchema>()
+
+  return (
+    <div className="space-y-5">
+      <div className="grid max-w-[calc(100%-108px)] grid-cols-2 gap-5">
+        <Input
+          label="Параметр для загрузки"
+          placeholder='{"entity": "Post", "id": 12}'
+          {...register(`containers.${containerIndex}.fields.${fieldIndex}.upload_param`)}
+          error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.upload_param}
+        />
+      </div>
+      <div className="flex max-w-[calc(100%-108px)] items-end gap-5">
+        <div className="flex-1">
+          <Input
+            label="Максимальное кол-во изображений"
+            placeholder="1"
+            {...register(`containers.${containerIndex}.fields.${fieldIndex}.max_files`)}
+            error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.max_files}
+          />
+        </div>
+        <div className="flex-1">
+          <Input
+            label="Максимальный размер изображений"
+            placeholder="2MB"
+            {...register(`containers.${containerIndex}.fields.${fieldIndex}.max_file_size`)}
+            error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.max_file_size}
+          />
+        </div>
+        <div className="flex-1">
+          <Input
+            label="Максимальное разрешение файла"
+            placeholder="1920x1080"
+            {...register(`containers.${containerIndex}.fields.${fieldIndex}.max_resolution`)}
+            error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.max_resolution}
+          />
+        </div>
+      </div>
+      <div className="flex max-w-[calc(100%-108px)] items-end gap-5">
+        <div className="flex-1">
+          <Input
+            label="Роут для загрузки изображений на сервер"
+            placeholder="/api/v1/upload/gallery"
+            {...register(`containers.${containerIndex}.fields.${fieldIndex}.upload_route`)}
+            error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.upload_route}
+          />
+        </div>
+        <div className="flex-1">
+          <Controller
+            name={`containers.${containerIndex}.fields.${fieldIndex}.file_types`}
+            control={control}
+            render={({ field: { name, value, onChange } }) => (
+              <Select
+                name={name}
+                label="Типы файлов"
+                placeholder="Оберіть"
+                isMulti
+                options={fileTypes}
+                value={fileTypes.filter(c => value?.includes(c.value)) ?? []}
+                onChange={options => onChange(options?.map(option => option.value))}
+                hideSelectedOptions={false}
+                closeMenuOnSelect={false}
+                error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.file_types}
+              />
+            )}
+          />
+        </div>
+        <div className="flex-1">
+          <Controller
+            name={`containers.${containerIndex}.fields.${fieldIndex}.folder_hierarchy_complexity`}
+            control={control}
+            render={({ field: { name, value, onChange } }) => (
+              <Select
+                name={name}
+                label="Сложность иерархии папок"
+                placeholder="Оберіть"
+                options={folderHierarchy}
+                value={folderHierarchy.find(c => c.value === value)}
+                onChange={option => {
+                  if (option) {
+                    onChange(option.value)
+                  }
+                }}
+                error={
+                  !!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]
+                    ?.folder_hierarchy_complexity
+                }
+              />
+            )}
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
+export default MultipleImageType
