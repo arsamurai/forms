@@ -101,6 +101,7 @@ const FormField: FC<FormFieldProps> = ({ containerIndex, fieldIndex, removeField
       setValue(`containers.${containerIndex}.fields.${fieldIndex}.max_files`, null)
       setValue(`containers.${containerIndex}.fields.${fieldIndex}.max_file_size`, null)
       setValue(`containers.${containerIndex}.fields.${fieldIndex}.max_resolution`, null)
+      setValue(`containers.${containerIndex}.fields.${fieldIndex}.file_types`, null)
       setValue(
         `containers.${containerIndex}.fields.${fieldIndex}.folder_hierarchy_complexity`,
         null,

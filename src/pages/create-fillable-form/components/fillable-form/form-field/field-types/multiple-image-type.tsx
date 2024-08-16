@@ -4,6 +4,7 @@ import { Controller, useFormContext } from "react-hook-form"
 import { FillableFormSchema } from "@services/fillable-forms-service"
 
 import { Input, Select } from "@shared/ui/fields"
+import { MaskInput } from "@shared/ui/fields/input"
 
 import { fileTypes } from "./сonstants/file-types.constants"
 import { folderHierarchy } from "./сonstants/folder-hierarchy.constants"
@@ -30,11 +31,23 @@ const MultipleImageType: FC<{ containerIndex: number; fieldIndex: number }> = ({
       </div>
       <div className="flex max-w-[calc(100%-108px)] items-end gap-5">
         <div className="flex-1">
-          <Input
-            label="Максимальное кол-во изображений"
-            placeholder="1"
-            {...register(`containers.${containerIndex}.fields.${fieldIndex}.max_files`)}
-            error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.max_files}
+          <Controller
+            name={`containers.${containerIndex}.fields.${fieldIndex}.max_files`}
+            control={control}
+            render={({ field: { name, value, onChange } }) => {
+              return (
+                <MaskInput
+                  mask={Number}
+                  min={1}
+                  label="Максимальное количество изображений"
+                  placeholder="1"
+                  name={name}
+                  value={value?.toString() ?? ""}
+                  onAccept={onChange}
+                  error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.max_files}
+                />
+              )
+            }}
           />
         </div>
         <div className="flex-1">

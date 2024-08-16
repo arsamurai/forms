@@ -41,7 +41,7 @@ const ImageType: FC<{ containerIndex: number; fieldIndex: number }> = ({
                   label="Максимальное количество файлов"
                   placeholder="1"
                   name={name}
-                  value={value ?? ""}
+                  value={value?.toString() ?? ""}
                   onAccept={onChange}
                   error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.max_files}
                 />
