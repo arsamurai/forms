@@ -17,7 +17,7 @@ export const useAddFillableFormMutation = () => {
     mutationFn: FillableFormsService.addFillableForm,
     onSuccess: async response => {
       navigate(ROUTES.FILLABLE_FORMS.path, { replace: true })
-      showToast("Форму успішно створено!", { type: "success" })
+      showToast("Форму успешно создано!", { type: "success" })
 
       const oldData = queryClient.getQueryData<AxiosResponse<FillableFormEntity[]>>([
         fillableFormsQueryCacheKey,

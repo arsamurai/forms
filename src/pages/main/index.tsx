@@ -1,4 +1,4 @@
-import { PagesBlock } from "./components/pages-block"
+import { PagesBlock } from "./pages-block"
 
 const MainPage = () => {
   return (

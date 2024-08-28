@@ -6,7 +6,7 @@ import { pageLinks } from "./page-links.constants"
 
 const PagesBlock = () => {
   return (
-    <div className="h-fit min-h-[1024px] w-full max-w-[1440px] bg-white px-[70px] py-[136px]">
+    <div className="flex h-fit min-h-[1024px] w-full max-w-[1440px] gap-5 bg-white px-[70px] py-[136px]">
       {pageLinks.map(link => (
         <Link
           key={link.href}

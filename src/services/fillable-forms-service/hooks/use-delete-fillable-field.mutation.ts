@@ -8,7 +8,7 @@ export const useDeleteFillableFieldMutation = () => {
   return useMutation({
     mutationFn: FillableFormsService.deleteFillableField,
     onSuccess: () => {
-      showToast("Поле успішно видалено!", { type: "success" })
+      showToast("Поле успешно удалено!", { type: "success" })
     },
   })
 }

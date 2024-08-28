@@ -11,7 +11,7 @@ export const useChangeFieldsOrderMutation = () => {
   return useMutation({
     mutationFn: FillableFormsService.changeFieldsOrder,
     onSuccess: response => {
-      showToast("Порядок полів успішно змінено!", { type: "success" })
+      showToast("Порядок полей успешно изменено!", { type: "success" })
       queryClient.setQueryData([fillableFormQueryCacheKey, response.data.id], response)
     },
   })

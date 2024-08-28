@@ -11,7 +11,7 @@ type CombinedProps = CheckboxProps & React.ComponentPropsWithoutRef<typeof Check
 
 const Checkbox = React.forwardRef<React.ElementRef<typeof CheckboxPrimitive.Root>, CombinedProps>(
   ({ id, label, className, ...props }, ref) => (
-    <div className="flex">
+    <div className="flex items-center">
       <CheckboxPrimitive.Root
         ref={ref}
         id={id}

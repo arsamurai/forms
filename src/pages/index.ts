@@ -1,4 +1,6 @@
 export { default as MainPage } from "./main"
+export { default as TablesPage } from "./tables"
+export { default as CreateTablePage } from "./create-table"
 export { default as FillableFormsPage } from "./fillable-forms"
 export { default as CreateFillableFormPage } from "./create-fillable-form"
 export { default as NotFoundPage } from "./not-found"

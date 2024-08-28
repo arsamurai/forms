@@ -9,4 +9,7 @@ export const ROUTES = {
   FILLABLE_FORMS: {
     path: "/fillable-forms",
   },
+  TABLES: {
+    path: "/tables",
+  },
 } satisfies Record<string, RouterParams>

@@ -17,7 +17,7 @@ export const useEditFillableFormMutation = () => {
     mutationFn: FillableFormsService.editFillableForm,
     onSuccess: async response => {
       navigate(ROUTES.FILLABLE_FORMS.path, { replace: true })
-      showToast("Форму успішно відредаговано!", { type: "success" })
+      showToast("Форму успешно отредактировано!", { type: "success" })
 
       const oldData = queryClient.getQueryData<AxiosResponse<FillableFormEntity[]>>([
         fillableFormsQueryCacheKey,

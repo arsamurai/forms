@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect } from "react"
+import { ChangeEvent, FC, useEffect } from "react"
 import { Link, useSearchParams } from "react-router-dom"
 
 import { useSearchQuery } from "@app/search"
@@ -12,7 +12,9 @@ import CloseIcon from "@assets/icons/close.svg"
 import PlusIcon from "@assets/icons/plus.svg"
 import SearchIcon from "@assets/icons/search.svg"
 
-const FillableFormsHeader = () => {
+import { ListHeaderProps } from "./list.types"
+
+const ListHeader: FC<ListHeaderProps> = ({ title, link }) => {
   const [searchParams, setSearchParams] = useSearchParams()
   const { searchQuery, setSearchQuery } = useSearchQuery()
 
@@ -34,7 +36,7 @@ const FillableFormsHeader = () => {
 
   return (
     <div className="mb-14 flex items-center gap-10">
-      <Typography variant="pageTitle">Формы заполняемые</Typography>
+      <Typography variant="pageTitle">{title}</Typography>
       <div className="flex-1">
         <Input
           name="search"
@@ -46,7 +48,7 @@ const FillableFormsHeader = () => {
         />
       </div>
       <Button variant="text" endIcon={<PlusIcon />} className="h-[33px] w-fit p-1" asChild>
-        <Link to={ROUTES.FILLABLE_FORMS.path + "/create"}>Добавить</Link>
+        <Link to={link + "/create"}>Добавить</Link>
       </Button>
       <Button variant="text" className="w-fit p-1.5" asChild>
         <Link to={ROUTES.ROOT.path}>
@@ -56,4 +58,4 @@ const FillableFormsHeader = () => {
     </div>
   )
 }
-export default FillableFormsHeader
+export default ListHeader

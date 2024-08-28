@@ -13,7 +13,7 @@ export const useDeleteFillableFormMutation = () => {
   return useMutation({
     mutationFn: FillableFormsService.deleteFillableForm,
     onSuccess: (response, id) => {
-      showToast("Форму успішно видалено!", { type: "success" })
+      showToast("Форму успешно удалено!", { type: "success" })
       queryClient.setQueryData(
         [fillableFormsQueryCacheKey],
         (oldData: AxiosResponse<FillableFormEntity[]> | undefined) => {

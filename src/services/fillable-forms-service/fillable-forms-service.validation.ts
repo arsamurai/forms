@@ -53,7 +53,7 @@ const fieldSchema = z
     route_param: z.string().nullable().optional(),
     is_multiselect: z.boolean().nullable().optional(),
     upload_route: z.string().nullable().optional(),
-    max_files: z.string().nullable().optional(),
+    max_files: z.number().nullable().optional(),
     max_file_size: z.string().nullable().optional(),
     max_resolution: z.string().nullable().optional(),
     folder_hierarchy_complexity: z.string(FolderHierarchySchema).nullable().optional(),

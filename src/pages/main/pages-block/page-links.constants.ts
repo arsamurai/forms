@@ -6,4 +6,9 @@ export const pageLinks = [
     href: ROUTES.FILLABLE_FORMS.path,
     color: "bg-green-light",
   },
+  {
+    label: "Таблицы",
+    href: ROUTES.TABLES.path,
+    color: "bg-yellow",
+  },
 ]

@@ -1,4 +1,11 @@
-import { CreateFillableFormPage, FillableFormsPage, MainPage, NotFoundPage } from "@pages"
+import {
+  CreateFillableFormPage,
+  CreateTablePage,
+  FillableFormsPage,
+  MainPage,
+  NotFoundPage,
+  TablesPage,
+} from "@pages"
 import { createBrowserRouter } from "react-router-dom"
 
 import { RootLayout } from "@features/layouts"
@@ -21,6 +28,18 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.FILLABLE_FORMS.path + "/edit/:id",
         element: <CreateFillableFormPage />,
+      },
+      {
+        path: ROUTES.TABLES.path,
+        element: <TablesPage />,
+      },
+      {
+        path: ROUTES.TABLES.path + "/create",
+        element: <CreateTablePage />,
+      },
+      {
+        path: ROUTES.TABLES.path + "/edit/:id",
+        element: <CreateTablePage />,
       },
     ],
   },

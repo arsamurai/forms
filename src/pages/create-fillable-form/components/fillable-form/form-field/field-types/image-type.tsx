@@ -6,7 +6,7 @@ import { FillableFormSchema } from "@services/fillable-forms-service"
 import { Input, Select } from "@shared/ui/fields"
 import { MaskInput } from "@shared/ui/fields/input"
 
-import { folderHierarchy } from "./сonstants/folder-hierarchy.constants"
+import { folderHierarchy } from "./constants/folder-hierarchy.constants"
 
 const ImageType: FC<{ containerIndex: number; fieldIndex: number }> = ({
   containerIndex,
@@ -42,7 +42,7 @@ const ImageType: FC<{ containerIndex: number; fieldIndex: number }> = ({
                   placeholder="1"
                   name={name}
                   value={value?.toString() ?? ""}
-                  onAccept={onChange}
+                  onAccept={maskedValue => onChange(Number(maskedValue))}
                   error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.max_files}
                 />
               )
@@ -86,11 +86,7 @@ const ImageType: FC<{ containerIndex: number; fieldIndex: number }> = ({
                 placeholder="Оберіть"
                 options={folderHierarchy}
                 value={folderHierarchy.find(c => c.value === value)}
-                onChange={option => {
-                  if (option) {
-                    onChange(option.value)
-                  }
-                }}
+                onChange={option => option && onChange(option.value)}
                 error={
                   !!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]
                     ?.folder_hierarchy_complexity

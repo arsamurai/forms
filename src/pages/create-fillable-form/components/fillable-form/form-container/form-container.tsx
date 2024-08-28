@@ -102,7 +102,7 @@ const FormContainer: FC<FormContainerProps> = ({
 
   return (
     <div className="space-y-10 rounded-[20px] border border-solid border-stroke p-8">
-      <Typography variant="containerTitle">
+      <Typography variant="pageSubtitle">
         Блок {containerIndex + 1}: {containerTitle}
       </Typography>
       <div className="mb-10 flex gap-5">

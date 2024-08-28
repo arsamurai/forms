@@ -1,0 +1,5 @@
+export { default as TextType } from "./text-type"
+export { default as LinkType } from "./link-type"
+export { default as BadgeType } from "./badge-type"
+export { default as SwitchType } from "./switch-type"
+export { ButtonsGroupType } from "./buttons-group-type"

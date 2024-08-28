@@ -13,6 +13,7 @@ export const buttonVariants = cva(
       },
       size: {
         medium: "px-5 h-[42px] text-lg",
+        small: "px-[34px] h-[35px]",
       },
     },
     defaultVariants: {

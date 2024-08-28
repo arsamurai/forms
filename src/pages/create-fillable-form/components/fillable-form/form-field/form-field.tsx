@@ -15,9 +15,15 @@ import { Typography } from "@shared/ui/typography"
 import ArrowIcon from "@assets/icons/arrow.svg"
 import CloseIcon from "@assets/icons/close.svg"
 
-import { ImageType, MultipleImageType, SelectType, TextEditorType, TextType } from "./field-types"
-import TextAreaType from "./field-types/textarea-type"
-import { fieldsTypes } from "./fields-types.constants"
+import { fieldsTypes } from "./constants/fields-types.constants"
+import {
+  ImageType,
+  MultipleImageType,
+  SelectType,
+  TextEditorType,
+  TextType,
+  TextareaType,
+} from "./field-types"
 import { FormFieldProps } from "./form-field.types"
 
 const FormField: FC<FormFieldProps> = ({ containerIndex, fieldIndex, removeField, moveField }) => {
@@ -87,7 +93,7 @@ const FormField: FC<FormFieldProps> = ({ containerIndex, fieldIndex, removeField
   }
 
   useEffect(() => {
-    const clearFields = () => {
+    const clearFieldTypeData = () => {
       setValue(`containers.${containerIndex}.fields.${fieldIndex}.placeholder`, null)
       setValue(`containers.${containerIndex}.fields.${fieldIndex}.validators`, null)
       setValue(`containers.${containerIndex}.fields.${fieldIndex}.show_max_length`, null)
@@ -109,14 +115,14 @@ const FormField: FC<FormFieldProps> = ({ containerIndex, fieldIndex, removeField
     }
 
     if (prevFieldTypeRef.current !== fieldType) {
-      clearFields()
+      clearFieldTypeData()
       prevFieldTypeRef.current = fieldType
     }
   }, [containerIndex, fieldIndex, fieldType, setValue])
 
   const FieldVariant = {
     [FieldTypeEnum.TextInput]: TextType,
-    [FieldTypeEnum.Textarea]: TextAreaType,
+    [FieldTypeEnum.Textarea]: TextareaType,
     [FieldTypeEnum.TextEditor]: TextEditorType,
     [FieldTypeEnum.Select]: SelectType,
     [FieldTypeEnum.Image]: ImageType,
@@ -229,12 +235,7 @@ const FormField: FC<FormFieldProps> = ({ containerIndex, fieldIndex, removeField
               placeholder="Оберіть"
               options={fieldsTypes}
               value={fieldsTypes.find(c => c.value === value)}
-              onChange={option => {
-                if (option) {
-                  onChange(option.value)
-                  setValue(`containers.${containerIndex}.fields.${fieldIndex}.type`, option.value)
-                }
-              }}
+              onChange={option => option && onChange(option.value)}
               error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.type}
             />
           )}

@@ -9,22 +9,22 @@ import { Loading } from "@shared/ui/loading"
 import CreateFillableFormHeader from "./components/create-filable-form-header"
 import { FillableForm } from "./components/fillable-form"
 
-const CreateFillableForm = () => {
+const CreateFillableFormPage = () => {
   const { state, pathname } = useLocation()
   const { id } = useParams()
   const navigate = useNavigate()
 
-  const { data: form, isLoading, isError } = useFillableFormQuery(Number(id), state?.form)
+  const { data: form, isLoading, isError } = useFillableFormQuery(Number(id), state?.entity)
 
   useEffect(() => {
-    if (!state?.form) {
+    if (!state?.entity) {
       return
     }
     navigate(pathname, {
       replace: true,
       state: {
         ...state,
-        form: null,
+        entity: null,
       },
     })
   }, [pathname]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -48,4 +48,4 @@ const CreateFillableForm = () => {
     </div>
   )
 }
-export default CreateFillableForm
+export default CreateFillableFormPage

@@ -5,7 +5,7 @@ import { FillableFormSchema } from "@services/fillable-forms-service"
 
 import { Input, Select } from "@shared/ui/fields"
 
-import { validators } from "./сonstants/validators.constants"
+import { validators } from "./constants/validators.constants"
 
 const TextType: FC<{ containerIndex: number; fieldIndex: number }> = ({
   containerIndex,

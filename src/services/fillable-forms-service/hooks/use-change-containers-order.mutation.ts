@@ -11,7 +11,7 @@ export const useChangeContainersOrderMutation = () => {
   return useMutation({
     mutationFn: FillableFormsService.changeContainersOrder,
     onSuccess: response => {
-      showToast("Порядок блоків успішно змінено!", { type: "success" })
+      showToast("Порядок блоков успешно изменено!", { type: "success" })
       queryClient.setQueryData([fillableFormQueryCacheKey, response.data.id], response)
     },
   })

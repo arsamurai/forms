@@ -8,7 +8,7 @@ export const useDeleteFillableContainerMutation = () => {
   return useMutation({
     mutationFn: FillableFormsService.deleteFillableContainer,
     onSuccess: () => {
-      showToast("Блок успішно видалено!", { type: "success" })
+      showToast("Блок успешно удалено!", { type: "success" })
     },
   })
 }

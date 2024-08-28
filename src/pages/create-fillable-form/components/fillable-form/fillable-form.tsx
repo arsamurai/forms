@@ -71,7 +71,7 @@ const FillableForm: FC<{ form?: FillableFormEntity }> = ({ form }) => {
       methods.reset()
     } catch (e) {
       if (isAxiosError(e) && e.response?.status === 400) {
-        showToast("Не вдалось створити форму!", { type: "error" })
+        showToast("Не удалось создать форму!", { type: "error" })
       }
     }
   }
@@ -85,7 +85,7 @@ const FillableForm: FC<{ form?: FillableFormEntity }> = ({ form }) => {
       <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-[76px]">
         <MainForm />
         <div className="space-y-6">
-          <Typography variant="containerTitle">Блоки формы</Typography>
+          <Typography variant="pageSubtitle">Блоки формы</Typography>
           {containers.map((item, index) => (
             <FormContainer
               key={item.id}
