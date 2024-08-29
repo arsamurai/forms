@@ -44,6 +44,7 @@ export default {
         "green-light": "rgba(207, 255, 223, 1)",
         "blue-light": "rgba(79, 255, 255, 1)",
         yellow: "rgba(241, 255, 85, 1)",
+        pink: "rgba(252, 216, 255, 1)",
       },
       fontSize: {
         xs: ["0.75rem", "14px"],

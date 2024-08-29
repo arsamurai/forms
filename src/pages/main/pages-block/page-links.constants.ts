@@ -11,4 +11,9 @@ export const pageLinks = [
     href: ROUTES.TABLES.path,
     color: "bg-yellow",
   },
+  {
+    label: "Чистые формы",
+    href: ROUTES.CLEAR_FORMS.path,
+    color: "bg-pink",
+  },
 ]

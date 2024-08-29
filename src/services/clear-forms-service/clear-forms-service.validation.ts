@@ -39,7 +39,6 @@ const fieldSchema = z
     field_title: z.string().min(1),
     field_name: z.string().min(1),
     field_text: z.string().min(1),
-    api_key: z.string().min(1),
     size: z.string().min(1),
     type: FieldTypeSchema,
     // different
@@ -198,7 +197,7 @@ const containerSchema = z.object({
   fields: z.array(fieldSchema),
 })
 
-export const fillableFormSchema = z.object({
+export const clearFormSchema = z.object({
   id: z.number().optional(),
   created_at: z.string().optional(),
   title: z.string().min(1),
@@ -209,6 +208,6 @@ export const fillableFormSchema = z.object({
   containers: z.array(containerSchema),
 })
 
-export type FillableFormSchema = z.infer<typeof fillableFormSchema>
+export type ClearFormSchema = z.infer<typeof clearFormSchema>
 export type ContainerSchema = z.infer<typeof containerSchema>
 export type FieldSchema = z.infer<typeof fieldSchema>

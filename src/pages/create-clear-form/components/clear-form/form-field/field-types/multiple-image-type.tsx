@@ -1,14 +1,15 @@
 import { FC } from "react"
 import { Controller, useFormContext } from "react-hook-form"
 
-import { FillableFormSchema } from "@services/fillable-forms-service"
+import { ClearFormSchema } from "@services/clear-forms-service"
 
 import { Input, Select } from "@shared/ui/fields"
 import { MaskInput } from "@shared/ui/fields/input"
 
+import { fileTypes } from "./constants/file-types.constants"
 import { folderHierarchy } from "./constants/folder-hierarchy.constants"
 
-const ImageType: FC<{ containerIndex: number; fieldIndex: number }> = ({
+const MultipleImageType: FC<{ containerIndex: number; fieldIndex: number }> = ({
   containerIndex,
   fieldIndex,
 }) => {
@@ -16,7 +17,7 @@ const ImageType: FC<{ containerIndex: number; fieldIndex: number }> = ({
     register,
     control,
     formState: { errors },
-  } = useFormContext<FillableFormSchema>()
+  } = useFormContext<ClearFormSchema>()
 
   return (
     <div className="space-y-5">
@@ -38,7 +39,7 @@ const ImageType: FC<{ containerIndex: number; fieldIndex: number }> = ({
                 <MaskInput
                   mask={Number}
                   min={1}
-                  label="Максимальное количество файлов"
+                  label="Максимальное количество изображений"
                   placeholder="1"
                   name={name}
                   value={value?.toString() ?? ""}
@@ -58,7 +59,7 @@ const ImageType: FC<{ containerIndex: number; fieldIndex: number }> = ({
                 <MaskInput
                   mask={Number}
                   min={1}
-                  label="Максимальный размер файлв"
+                  label="Максимальный размер изображений"
                   placeholder="2MB"
                   name={name}
                   value={value?.toString() ?? ""}
@@ -84,9 +85,29 @@ const ImageType: FC<{ containerIndex: number; fieldIndex: number }> = ({
         <div className="flex-1">
           <Input
             label="Роут для загрузки изображений на сервер"
-            placeholder="/api/v1/upload/profile-picture"
+            placeholder="/api/v1/upload/gallery"
             {...register(`containers.${containerIndex}.fields.${fieldIndex}.upload_route`)}
             error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.upload_route}
+          />
+        </div>
+        <div className="flex-1">
+          <Controller
+            name={`containers.${containerIndex}.fields.${fieldIndex}.file_types`}
+            control={control}
+            render={({ field: { name, value, onChange } }) => (
+              <Select
+                name={name}
+                label="Типы файлов"
+                placeholder="Оберіть"
+                isMulti
+                options={fileTypes}
+                value={fileTypes.filter(c => value?.includes(c.value)) ?? []}
+                onChange={options => onChange(options?.map(option => option.value))}
+                hideSelectedOptions={false}
+                closeMenuOnSelect={false}
+                error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.file_types}
+              />
+            )}
           />
         </div>
         <div className="flex-1">
@@ -113,4 +134,4 @@ const ImageType: FC<{ containerIndex: number; fieldIndex: number }> = ({
     </div>
   )
 }
-export default ImageType
+export default MultipleImageType

@@ -1,4 +1,6 @@
 import {
+  ClearFormsPage,
+  CreateClearFormPage,
   CreateFillableFormPage,
   CreateTablePage,
   FillableFormsPage,
@@ -28,6 +30,18 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.FILLABLE_FORMS.path + "/edit/:id",
         element: <CreateFillableFormPage />,
+      },
+      {
+        path: ROUTES.CLEAR_FORMS.path,
+        element: <ClearFormsPage />,
+      },
+      {
+        path: ROUTES.CLEAR_FORMS.path + "/create",
+        element: <CreateClearFormPage />,
+      },
+      {
+        path: ROUTES.CLEAR_FORMS.path + "/edit/:id",
+        element: <CreateClearFormPage />,
       },
       {
         path: ROUTES.TABLES.path,

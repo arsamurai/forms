@@ -51,11 +51,25 @@ const MultipleImageType: FC<{ containerIndex: number; fieldIndex: number }> = ({
           />
         </div>
         <div className="flex-1">
-          <Input
-            label="Максимальный размер изображений"
-            placeholder="2MB"
-            {...register(`containers.${containerIndex}.fields.${fieldIndex}.max_file_size`)}
-            error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.max_file_size}
+          <Controller
+            name={`containers.${containerIndex}.fields.${fieldIndex}.max_file_size`}
+            control={control}
+            render={({ field: { name, value, onChange } }) => {
+              return (
+                <MaskInput
+                  mask={Number}
+                  min={1}
+                  label="Максимальный размер изображений"
+                  placeholder="2MB"
+                  name={name}
+                  value={value?.toString() ?? ""}
+                  onAccept={maskedValue => onChange(Number(maskedValue))}
+                  error={
+                    !!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.max_file_size
+                  }
+                />
+              )
+            }}
           />
         </div>
         <div className="flex-1">

@@ -1,7 +1,7 @@
 import { FC } from "react"
 import { Controller, useFormContext } from "react-hook-form"
 
-import { FillableFormSchema } from "@services/fillable-forms-service"
+import { ClearFormSchema } from "@services/clear-forms-service"
 
 import { Input, Select } from "@shared/ui/fields"
 import { MaskInput } from "@shared/ui/fields/input"
@@ -16,7 +16,7 @@ const ImageType: FC<{ containerIndex: number; fieldIndex: number }> = ({
     register,
     control,
     formState: { errors },
-  } = useFormContext<FillableFormSchema>()
+  } = useFormContext<ClearFormSchema>()
 
   return (
     <div className="space-y-5">
@@ -58,7 +58,7 @@ const ImageType: FC<{ containerIndex: number; fieldIndex: number }> = ({
                 <MaskInput
                   mask={Number}
                   min={1}
-                  label="Максимальный размер файлв"
+                  label="Максимальный размер файла"
                   placeholder="2MB"
                   name={name}
                   value={value?.toString() ?? ""}

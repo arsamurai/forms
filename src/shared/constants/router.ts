@@ -9,6 +9,9 @@ export const ROUTES = {
   FILLABLE_FORMS: {
     path: "/fillable-forms",
   },
+  CLEAR_FORMS: {
+    path: "/clear-forms",
+  },
   TABLES: {
     path: "/tables",
   },

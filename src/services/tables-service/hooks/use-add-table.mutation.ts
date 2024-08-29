@@ -31,7 +31,7 @@ export const useAddTableMutation = () => {
         )
       } else {
         await queryClient.invalidateQueries({
-          queryKey: [tableQueryCacheKey],
+          queryKey: [tablesQueryCacheKey],
         })
       }
 
