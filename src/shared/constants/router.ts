@@ -15,4 +15,13 @@ export const ROUTES = {
   TABLES: {
     path: "/tables",
   },
+  MODALS: {
+    path: "/modals",
+  },
+  WEBPAGES: {
+    path: "/webpages",
+  },
+  OFFCANVAS: {
+    path: "/offcanvas",
+  },
 } satisfies Record<string, RouterParams>

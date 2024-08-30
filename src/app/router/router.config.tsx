@@ -2,11 +2,17 @@ import {
   ClearFormsPage,
   CreateClearFormPage,
   CreateFillableFormPage,
+  CreateModalPage,
+  CreateOffcanvasPage,
   CreateTablePage,
+  CreateWebpagePage,
   FillableFormsPage,
   MainPage,
+  ModalsPage,
   NotFoundPage,
+  OffcanvasPage,
   TablesPage,
+  WebpagesPage,
 } from "@pages"
 import { createBrowserRouter } from "react-router-dom"
 
@@ -54,6 +60,42 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.TABLES.path + "/edit/:id",
         element: <CreateTablePage />,
+      },
+      {
+        path: ROUTES.MODALS.path,
+        element: <ModalsPage />,
+      },
+      {
+        path: ROUTES.MODALS.path + "/create",
+        element: <CreateModalPage />,
+      },
+      {
+        path: ROUTES.MODALS.path + "/edit/:id",
+        element: <CreateModalPage />,
+      },
+      {
+        path: ROUTES.WEBPAGES.path,
+        element: <WebpagesPage />,
+      },
+      {
+        path: ROUTES.WEBPAGES.path + "/create",
+        element: <CreateWebpagePage />,
+      },
+      {
+        path: ROUTES.WEBPAGES.path + "/edit/:id",
+        element: <CreateWebpagePage />,
+      },
+      {
+        path: ROUTES.OFFCANVAS.path,
+        element: <OffcanvasPage />,
+      },
+      {
+        path: ROUTES.OFFCANVAS.path + "/create",
+        element: <CreateOffcanvasPage />,
+      },
+      {
+        path: ROUTES.OFFCANVAS.path + "/edit/:id",
+        element: <CreateOffcanvasPage />,
       },
     ],
   },

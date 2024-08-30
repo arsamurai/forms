@@ -16,7 +16,7 @@ import ArrowIcon from "@assets/icons/arrow.svg"
 import CloseIcon from "@assets/icons/close.svg"
 
 import { BadgeType, ButtonsGroupType, LinkType, SwitchType, TextType } from "./column-types"
-import { columnTypes } from "./constants/column-types.constants"
+import { columnTypesArray } from "./constants/column-types-array"
 import { TableColumnProps } from "./table-column.types"
 
 const TableColumn: FC<TableColumnProps> = ({ columnIndex, removeColumn, moveColumn }) => {
@@ -162,8 +162,8 @@ const TableColumn: FC<TableColumnProps> = ({ columnIndex, removeColumn, moveColu
                   name={name}
                   label="Тип отображения данных"
                   placeholder="Оберіть"
-                  options={columnTypes}
-                  value={columnTypes.find(c => c.value === value)}
+                  options={columnTypesArray}
+                  value={columnTypesArray.find(c => c.value === value)}
                   onChange={option => option && onChange(option.value)}
                   error={!!errors?.columns?.[columnIndex]?.column_type}
                 />

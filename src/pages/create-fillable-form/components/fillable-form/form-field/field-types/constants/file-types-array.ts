@@ -1,6 +1,6 @@
-import { ImageEnum } from "@services/clear-forms-service"
+import { ImageEnum } from "@services/fillable-forms-service"
 
-export const fileTypes = [
+export const fileTypesArray = [
   { value: ImageEnum.JPG, label: "JPG" },
   { value: ImageEnum.PNG, label: "PNG" },
   { value: ImageEnum.GIF, label: "GIF" },

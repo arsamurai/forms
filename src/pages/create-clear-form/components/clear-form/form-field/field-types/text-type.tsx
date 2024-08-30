@@ -5,7 +5,7 @@ import { ClearFormSchema } from "@services/clear-forms-service"
 
 import { Input, Select } from "@shared/ui/fields"
 
-import { validators } from "./constants/validators.constants"
+import { validatorsArray } from "./constants/validators-array"
 
 const TextType: FC<{ containerIndex: number; fieldIndex: number }> = ({
   containerIndex,
@@ -37,8 +37,8 @@ const TextType: FC<{ containerIndex: number; fieldIndex: number }> = ({
               label="Валидаторы"
               placeholder="Оберіть"
               isMulti
-              options={validators}
-              value={validators.filter(c => value?.includes(c.value)) ?? []}
+              options={validatorsArray}
+              value={validatorsArray.filter(c => value?.includes(c.value)) ?? []}
               onChange={options => onChange(options?.map(option => option.value))}
               hideSelectedOptions={false}
               closeMenuOnSelect={false}

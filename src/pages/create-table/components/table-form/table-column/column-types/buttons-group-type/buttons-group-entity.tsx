@@ -15,7 +15,7 @@ import { Typography } from "@shared/ui/typography"
 import ArrowIcon from "@assets/icons/arrow.svg"
 import CloseIcon from "@assets/icons/close.svg"
 
-import { TableButtonProps, buttonActionTypes, buttonActions } from "../../../table-button"
+import { TableButtonProps, buttonActionTypesArray, buttonActionsArray } from "../../../table-button"
 
 const ButtonsGroupEntity: FC<TableButtonProps & { columnIndex: number }> = ({
   columnIndex,
@@ -150,8 +150,8 @@ const ButtonsGroupEntity: FC<TableButtonProps & { columnIndex: number }> = ({
                     name={name}
                     label="Тип кнопки"
                     placeholder="Оберіть"
-                    options={buttonActionTypes}
-                    value={buttonActionTypes.find(c => c.value === value)}
+                    options={buttonActionTypesArray}
+                    value={buttonActionTypesArray.find(c => c.value === value)}
                     onChange={option => option && onChange(option.value)}
                     error={!!errors?.columns?.[columnIndex]?.buttons?.[buttonIndex]?.action_type}
                   />
@@ -167,8 +167,8 @@ const ButtonsGroupEntity: FC<TableButtonProps & { columnIndex: number }> = ({
                     name={name}
                     label="Выбор из списка действия"
                     placeholder="Оберіть"
-                    options={buttonActions}
-                    value={buttonActions.find(c => c.value === value)}
+                    options={buttonActionsArray}
+                    value={buttonActionsArray.find(c => c.value === value)}
                     onChange={option => option && onChange(option.value)}
                     error={!!errors?.columns?.[columnIndex]?.buttons?.[buttonIndex]?.action}
                   />

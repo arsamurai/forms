@@ -43,8 +43,11 @@ export default {
         "accent-red": "rgba(237, 48, 28, 1)",
         "green-light": "rgba(207, 255, 223, 1)",
         "blue-light": "rgba(79, 255, 255, 1)",
+        "red-light": "rgba(255, 197, 197, 1)",
+        "yellow-light": "rgba(246, 253, 204, 1)",
         yellow: "rgba(241, 255, 85, 1)",
         pink: "rgba(252, 216, 255, 1)",
+        violet: "rgba(181, 185, 255, 1)",
       },
       fontSize: {
         xs: ["0.75rem", "14px"],

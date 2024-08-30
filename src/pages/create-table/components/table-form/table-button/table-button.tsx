@@ -15,8 +15,8 @@ import { Typography } from "@shared/ui/typography"
 import ArrowIcon from "@assets/icons/arrow.svg"
 import CloseIcon from "@assets/icons/close.svg"
 
-import { buttonActionTypes } from "./constants/button-action-types.constants"
-import { buttonActions } from "./constants/button-actions.constants"
+import { buttonActionTypesArray } from "./constants/button-action-types-array"
+import { buttonActionsArray } from "./constants/button-actions-array"
 import { TableButtonProps } from "./table-button.types"
 
 const TableButton: FC<TableButtonProps> = ({ buttonIndex, removeButton, moveButton }) => {
@@ -143,8 +143,8 @@ const TableButton: FC<TableButtonProps> = ({ buttonIndex, removeButton, moveButt
                     name={name}
                     label="Тип кнопки"
                     placeholder="Оберіть"
-                    options={buttonActionTypes}
-                    value={buttonActionTypes.find(c => c.value === value)}
+                    options={buttonActionTypesArray}
+                    value={buttonActionTypesArray.find(c => c.value === value)}
                     onChange={option => option && onChange(option.value)}
                     error={!!errors?.buttons?.[buttonIndex]?.action_type}
                   />
@@ -160,8 +160,8 @@ const TableButton: FC<TableButtonProps> = ({ buttonIndex, removeButton, moveButt
                     name={name}
                     label="Выбор из списка действия"
                     placeholder="Оберіть"
-                    options={buttonActions}
-                    value={buttonActions.find(c => c.value === value)}
+                    options={buttonActionsArray}
+                    value={buttonActionsArray.find(c => c.value === value)}
                     onChange={option => option && onChange(option.value)}
                     error={!!errors?.buttons?.[buttonIndex]?.action}
                   />

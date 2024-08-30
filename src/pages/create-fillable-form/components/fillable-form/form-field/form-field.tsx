@@ -15,7 +15,7 @@ import { Typography } from "@shared/ui/typography"
 import ArrowIcon from "@assets/icons/arrow.svg"
 import CloseIcon from "@assets/icons/close.svg"
 
-import { fieldsTypes } from "./constants/fields-types.constants"
+import { fieldsTypesArray } from "./constants/fields-types-array"
 import {
   ImageType,
   MultipleImageType,
@@ -233,8 +233,8 @@ const FormField: FC<FormFieldProps> = ({ containerIndex, fieldIndex, removeField
               name={name}
               label="Тип поля"
               placeholder="Оберіть"
-              options={fieldsTypes}
-              value={fieldsTypes.find(c => c.value === value)}
+              options={fieldsTypesArray}
+              value={fieldsTypesArray.find(c => c.value === value)}
               onChange={option => option && onChange(option.value)}
               error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.type}
             />

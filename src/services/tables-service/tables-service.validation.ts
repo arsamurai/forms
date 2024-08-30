@@ -10,7 +10,7 @@ export enum ButtonActionTypeEnum {
   SendRequest = "sendRequest",
   GoToPage = "goToPage",
   OpenModal = "openModal",
-  Offkanavas = "Offkanavas",
+  Offcanvas = "offcanvas",
 }
 
 export enum ButtonActionEnum {

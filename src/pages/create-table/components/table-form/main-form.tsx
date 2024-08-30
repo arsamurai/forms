@@ -9,7 +9,7 @@ import { MaskInput } from "@shared/ui/fields/input"
 
 import PlusIcon from "@assets/icons/plus.svg"
 
-import { queryFields } from "./constants/query-fields.constants"
+import { queryFieldsArray } from "./constants/query-fields-array"
 
 const MainForm: FC<{ addButton: () => void }> = ({ addButton }) => {
   const {
@@ -83,8 +83,8 @@ const MainForm: FC<{ addButton: () => void }> = ({ addButton }) => {
                 name={name}
                 label="Список полей для поиска"
                 placeholder="Оберіть"
-                options={queryFields}
-                value={queryFields.filter(c => value?.includes(c.value)) ?? []}
+                options={queryFieldsArray}
+                value={queryFieldsArray.filter(c => value?.includes(c.value)) ?? []}
                 onChange={options => onChange(options?.map(option => option.value))}
                 error={!!errors?.query_fields}
                 isMulti
