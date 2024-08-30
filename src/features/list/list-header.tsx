@@ -31,7 +31,11 @@ const ListHeader: FC<ListHeaderProps> = ({ title, link }) => {
 
   useEffect(() => {
     const query = searchParams.get("query")
-    if (query) setSearchQuery(query)
+    if (query) {
+      setSearchQuery(query)
+    } else {
+      setSearchQuery("")
+    }
   }, [searchParams, setSearchQuery])
 
   return (
