@@ -1,6 +1,7 @@
 const controlStyles = {
   base: "bg-white hover:cursor-pointer flex transition duration-200 ease-in-out min-h-9 w-full font-open-sans-regular rounded-[20px] border border-solid border-stroke px-3 py-1 text-base text-t-black outline-none placeholder:text-t-gray",
   focused: "border-primary shadow-shadow-primary",
+  disabled: "opacity-50",
 }
 const valueContainerStyles = "gap-2"
 const placeholderStyles = "text-t-gray text-base font-open-sans-regular"

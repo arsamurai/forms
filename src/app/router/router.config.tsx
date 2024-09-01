@@ -5,6 +5,7 @@ import {
   CreateModalPage,
   CreateOffcanvasPage,
   CreateTablePage,
+  CreateViewPage,
   CreateWebpagePage,
   FillableFormsPage,
   MainPage,
@@ -12,6 +13,7 @@ import {
   NotFoundPage,
   OffcanvasPage,
   TablesPage,
+  ViewListPage,
   WebpagesPage,
 } from "@pages"
 import { createBrowserRouter } from "react-router-dom"
@@ -96,6 +98,18 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.OFFCANVAS.path + "/edit/:id",
         element: <CreateOffcanvasPage />,
+      },
+      {
+        path: ROUTES.VIEW.path,
+        element: <ViewListPage />,
+      },
+      {
+        path: ROUTES.VIEW.path + "/create",
+        element: <CreateViewPage />,
+      },
+      {
+        path: ROUTES.VIEW.path + "/edit/:id",
+        element: <CreateViewPage />,
       },
     ],
   },

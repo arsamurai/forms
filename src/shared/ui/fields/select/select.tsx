@@ -42,10 +42,11 @@ function Select<
         classNamePrefix="select"
         components={{ DropdownIndicator, ...components }}
         classNames={{
-          control: ({ isFocused }) =>
+          control: ({ isFocused, isDisabled }) =>
             cn(
               controlStyles.base,
               isFocused && controlStyles.focused,
+              isDisabled && controlStyles.disabled,
               {
                 "border-error": error,
               },

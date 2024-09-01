@@ -24,4 +24,7 @@ export const ROUTES = {
   OFFCANVAS: {
     path: "/offcanvas",
   },
+  VIEW: {
+    path: "/view",
+  },
 } satisfies Record<string, RouterParams>

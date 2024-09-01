@@ -44,23 +44,23 @@ const OffcanvasForm: FC<{ offcanvas?: OffcanvasEntity }> = ({ offcanvas }) => {
   const isSubmitButtonDisabled = !isDirty || addOffcanvas.isPending || editOffcanvas.isPending
 
   const { data: tables, isLoading: isLoadingOnTables } = useTablesQuery(
-    entityType === EntityTypeEnum.TABLE,
+    entityType === EntityTypeEnum.Table,
   )
   const { data: clearForms, isLoading: isLoadingOnClearForms } = useClearFormsQuery(
-    entityType === EntityTypeEnum.CLEAR_FORM,
+    entityType === EntityTypeEnum.ClearForm,
   )
   const { data: fillableForms, isLoading: isLoadingOnFillableForms } = useFillableFormsQuery(
-    entityType === EntityTypeEnum.FILLABLE_FORM,
+    entityType === EntityTypeEnum.FillableForm,
   )
   const isEntityIdLoading = isLoadingOnTables || isLoadingOnClearForms || isLoadingOnFillableForms
 
   const getEntityIdOptions = () => {
     switch (entityType) {
-      case EntityTypeEnum.TABLE:
+      case EntityTypeEnum.Table:
         return formatSelectOptions(tables)
-      case EntityTypeEnum.CLEAR_FORM:
+      case EntityTypeEnum.ClearForm:
         return formatSelectOptions(clearForms)
-      case EntityTypeEnum.FILLABLE_FORM:
+      case EntityTypeEnum.FillableForm:
         return formatSelectOptions(fillableForms)
       default:
         return []

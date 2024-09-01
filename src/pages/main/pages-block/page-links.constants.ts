@@ -31,4 +31,9 @@ export const pageLinks = [
     href: ROUTES.TABLES.path,
     color: "bg-yellow",
   },
+  {
+    label: "Отображение данных",
+    href: ROUTES.VIEW.path,
+    color: "bg-blue",
+  },
 ]

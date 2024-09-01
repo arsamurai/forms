@@ -48,6 +48,7 @@ export default {
         yellow: "rgba(241, 255, 85, 1)",
         pink: "rgba(252, 216, 255, 1)",
         violet: "rgba(181, 185, 255, 1)",
+        blue: "rgba(183, 211, 255, 1)",
       },
       fontSize: {
         xs: ["0.75rem", "14px"],

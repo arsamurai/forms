@@ -1,15 +1,15 @@
 import z from "zod"
 
 export enum EntityTypeEnum {
-  TABLE = "table",
-  FILLABLE_FORM = "fillableForm",
-  CLEAR_FORM = "clearForm",
+  Table = "Table",
+  FillableForm = "FillableForm",
+  ClearForm = "ClearForm",
 }
 
 export const EntityTypeSchema = z.nativeEnum(EntityTypeEnum)
 
 export const entityTypeArray = [
-  { value: EntityTypeEnum.TABLE, label: "Таблица" },
-  { value: EntityTypeEnum.FILLABLE_FORM, label: "Заполняемая форма" },
-  { value: EntityTypeEnum.CLEAR_FORM, label: "Чистая форма" },
+  { value: EntityTypeEnum.Table, label: "Таблица" },
+  { value: EntityTypeEnum.FillableForm, label: "Заполняемая форма" },
+  { value: EntityTypeEnum.ClearForm, label: "Чистая форма" },
 ]
