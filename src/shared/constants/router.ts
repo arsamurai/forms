@@ -27,4 +27,7 @@ export const ROUTES = {
   VIEW: {
     path: "/view",
   },
+  MENU: {
+    path: "/menu",
+  },
 } satisfies Record<string, RouterParams>

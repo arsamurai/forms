@@ -27,6 +27,11 @@ export const pageLinks = [
     color: "bg-green-light",
   },
   {
+    label: "Меню",
+    href: ROUTES.MENU.path,
+    color: "bg-turquoise",
+  },
+  {
     label: "Таблицы",
     href: ROUTES.TABLES.path,
     color: "bg-yellow",

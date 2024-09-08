@@ -2,6 +2,7 @@ import {
   ClearFormsPage,
   CreateClearFormPage,
   CreateFillableFormPage,
+  CreateMenuItemPage,
   CreateModalPage,
   CreateOffcanvasPage,
   CreateTablePage,
@@ -9,6 +10,7 @@ import {
   CreateWebpagePage,
   FillableFormsPage,
   MainPage,
+  MenuPage,
   ModalsPage,
   NotFoundPage,
   OffcanvasPage,
@@ -110,6 +112,18 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.VIEW.path + "/edit/:id",
         element: <CreateViewPage />,
+      },
+      {
+        path: ROUTES.MENU.path,
+        element: <MenuPage />,
+      },
+      {
+        path: ROUTES.MENU.path + "/create",
+        element: <CreateMenuItemPage />,
+      },
+      {
+        path: ROUTES.MENU.path + "/edit/:id",
+        element: <CreateMenuItemPage />,
       },
     ],
   },

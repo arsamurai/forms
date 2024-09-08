@@ -49,6 +49,7 @@ export default {
         pink: "rgba(252, 216, 255, 1)",
         violet: "rgba(181, 185, 255, 1)",
         blue: "rgba(183, 211, 255, 1)",
+        turquoise: "rgba(225, 255, 255, 1)",
       },
       fontSize: {
         xs: ["0.75rem", "14px"],
@@ -66,5 +67,6 @@ export default {
       },
     },
   },
-  plugins: [],
+  // eslint-disable-next-line no-undef
+  plugins: [require("tailwindcss-animate")],
 }

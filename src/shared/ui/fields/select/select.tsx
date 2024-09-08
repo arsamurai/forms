@@ -34,9 +34,7 @@ function Select<
 }: Props<OptionType, IsMulti, GroupType> & CustomSelectProps) {
   return (
     <div className={cn("space-y-1.5 text-t-black", { "text-error": error }, className)}>
-      {label && (
-        <label className="block font-montserrat-medium text-sm text-current">{label}</label>
-      )}
+      {label && <label className="font-montserrat-medium text-sm text-current">{label}</label>}
       <CustomSelect
         unstyled
         classNamePrefix="select"

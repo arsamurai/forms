@@ -132,4 +132,20 @@
 
 body {
   @apply font-inter-regular;
+
+  .rst__nodeContent {
+    @apply right-0;
+  }
+  .rst__moveHandle {
+    @apply rounded-none rounded-l-lg border-r-0 border-stroke shadow-none;
+  }
+  .rst__rowSearchMatch {
+    @apply rounded-lg;
+  }
+  .rst__rowContents {
+    @apply rounded-lg border-none p-0 shadow-none;
+  }
+  .rst__rowLabel {
+    @apply w-full pr-0;
+  }
 }
