@@ -86,10 +86,20 @@ const MultipleImageType: FC<{ containerIndex: number; fieldIndex: number }> = ({
           <Input
             label="Роут для загрузки изображений на сервер"
             placeholder="/api/v1/upload/gallery"
-            {...register(`containers.${containerIndex}.fields.${fieldIndex}.upload_route`)}
-            error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.upload_route}
+            {...register(`containers.${containerIndex}.fields.${fieldIndex}.image_upload_route`)}
+            error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.image_upload_route}
           />
         </div>
+        <div className="flex-1">
+          <Input
+            label="Роут для удаления изображений на сервер"
+            placeholder="/api/v1/delete/gallery"
+            {...register(`containers.${containerIndex}.fields.${fieldIndex}.image_delete_route`)}
+            error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.image_delete_route}
+          />
+        </div>
+      </div>
+      <div className="flex max-w-[calc(100%-108px)] items-end gap-5">
         <div className="flex-1">
           <Controller
             name={`containers.${containerIndex}.fields.${fieldIndex}.file_types`}

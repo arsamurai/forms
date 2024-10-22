@@ -29,6 +29,20 @@ export default {
       "open-sans-semibold": ["OpenSans Semibold", "sans-serif"],
       "open-sans-bold": ["OpenSans Bold", "sans-serif"],
     },
+    keyframes: {
+      "accordion-down": {
+        from: { height: "0" },
+        to: { height: "var(--radix-accordion-content-height)" },
+      },
+      "accordion-up": {
+        from: { height: "var(--radix-accordion-content-height)" },
+        to: { height: "0" },
+      },
+    },
+    animation: {
+      "accordion-down": "accordion-down .3s ease-out",
+      "accordion-up": "accordion-up .3s ease-out",
+    },
     extend: {
       colors: {
         white: "rgba(255, 255, 255, 1)",

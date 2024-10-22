@@ -3,7 +3,7 @@ const Loading = () => {
     <div role="loading" className="flex justify-center">
       <svg
         aria-hidden="true"
-        className="h-14 w-14 animate-spin fill-primary-focused text-stroke-20"
+        className="animate-spin h-14 w-14 fill-primary-focused text-stroke-20"
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

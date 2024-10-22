@@ -5,6 +5,7 @@ import {
   EditMenuItemParams,
   MenuItemResponse,
   MenuListResponse,
+  MenuTreeResponse,
   OrderData,
   ParentData,
 } from "./menu-service.types"
@@ -35,7 +36,7 @@ export class MenuService {
   }
 
   static getMenuTree = () => {
-    return api.get<MenuListResponse>("store?entityType=menu&action=getThree")
+    return api.get<MenuTreeResponse>("store?entityType=menu&action=getThree")
   }
 
   static getMenuItem = (id: number) => {

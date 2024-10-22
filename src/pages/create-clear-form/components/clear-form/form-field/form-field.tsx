@@ -8,9 +8,16 @@ import {
   useDeleteClearFieldMutation,
 } from "@services/clear-forms-service"
 
+import {
+  AccordionContent,
+  AccordionHeader,
+  AccordionItem,
+  AccordionTrigger,
+} from "@shared/ui/accordion"
 import { Button } from "@shared/ui/buttons"
 import { Checkbox, Input, Select } from "@shared/ui/fields"
 import { Typography } from "@shared/ui/typography"
+import { cn } from "@shared/utils/cn"
 
 import ArrowIcon from "@assets/icons/arrow.svg"
 import CloseIcon from "@assets/icons/close.svg"
@@ -103,7 +110,6 @@ const FormField: FC<FormFieldProps> = ({ containerIndex, fieldIndex, removeField
       setValue(`containers.${containerIndex}.fields.${fieldIndex}.options_route`, null)
       setValue(`containers.${containerIndex}.fields.${fieldIndex}.route_param`, null)
       setValue(`containers.${containerIndex}.fields.${fieldIndex}.is_multiselect`, null)
-      setValue(`containers.${containerIndex}.fields.${fieldIndex}.upload_route`, null)
       setValue(`containers.${containerIndex}.fields.${fieldIndex}.max_files`, null)
       setValue(`containers.${containerIndex}.fields.${fieldIndex}.max_file_size`, null)
       setValue(`containers.${containerIndex}.fields.${fieldIndex}.max_resolution`, null)
@@ -132,117 +138,130 @@ const FormField: FC<FormFieldProps> = ({ containerIndex, fieldIndex, removeField
   const Field = fieldType ? FieldVariant[fieldType] : null
 
   return (
-    <div className="space-y-5 rounded-[20px] border border-solid border-stroke p-5">
-      <Typography variant="fieldTitle">
-        Поле {fieldIndex + 1}: {fieldTitle}
-      </Typography>
-      <div className="flex items-center gap-5">
-        <div className="flex-1">
-          <Input
-            label="Название поля"
-            placeholder="Название поля"
-            {...register(`containers.${containerIndex}.fields.${fieldIndex}.field_title`)}
-            error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.field_title}
-          />
-        </div>
-        <div className="flex-1">
-          <Input
-            label="Name поля"
-            placeholder="title"
-            {...register(`containers.${containerIndex}.fields.${fieldIndex}.field_name`)}
-            error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.field_name}
-          />
-        </div>
-        <div className="w-48">
-          <Input
-            label="Размер"
-            placeholder="col-lg-3 col-md-6"
-            {...register(`containers.${containerIndex}.fields.${fieldIndex}.size`)}
-            error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.size}
-          />
-        </div>
-        <div className="w-[88px]">
-          <Button
-            type="button"
-            variant="text"
-            className="h-7 w-fit p-1"
-            onClick={remove}
-            disabled={fields.length === 1}
-            startIcon={
-              <div className="text-t-black *:h-2.5 *:w-2.5">
-                <CloseIcon />
-              </div>
-            }
-          >
-            <Typography variant="itemTitle">Удалить</Typography>
-          </Button>
-          <Button
-            type="button"
-            variant="text"
-            className="h-7 w-fit p-1"
-            disabled={isDisabledMoveUpButton}
-            onClick={() => move("up")}
-            startIcon={
-              <div className="text-t-black">
-                <ArrowIcon />
-              </div>
-            }
-          >
-            <Typography variant="itemTitle">Вверх</Typography>
-          </Button>
-          <Button
-            type="button"
-            variant="text"
-            className="h-7 w-fit p-1"
-            disabled={isDisabledMoveDownButton}
-            onClick={() => move("down")}
-            startIcon={
-              <div className="rotate-180 text-t-black">
-                <ArrowIcon />
-              </div>
-            }
-          >
-            <Typography variant="itemTitle">Вниз</Typography>
-          </Button>
-        </div>
-      </div>
-      <div className="grid max-w-[calc(100%-108px)] grid-cols-2 gap-5">
-        <Input
-          label="Текст под label"
-          placeholder="label"
-          {...register(`containers.${containerIndex}.fields.${fieldIndex}.field_text`)}
-          error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.field_text}
-        />
-      </div>
-      <div className="grid max-w-[calc(100%-108px)] grid-cols-2 gap-5">
-        <Controller
-          name={`containers.${containerIndex}.fields.${fieldIndex}.type`}
-          control={control}
-          render={({ field: { name, value, onChange } }) => (
-            <Select
-              name={name}
-              label="Тип поля"
-              placeholder="Оберіть"
-              options={fieldsTypesArray}
-              value={fieldsTypesArray.find(c => c.value === value)}
-              onChange={option => option && onChange(option.value)}
-              error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.type}
-            />
-          )}
-        />
-        {fieldType === FieldTypeEnum.Select && (
-          <div className="mt-9">
-            <Checkbox
-              id={`is-multi-select-${containerIndex}-${fieldIndex}`}
-              label="Мультиселект"
-              checked={isMultiSelect ?? false}
-              onCheckedChange={handleChangeMultiSelect}
+    <AccordionItem
+      value={`field-${containerIndex}-${fieldIndex}`}
+      className={cn("rounded-[20px] border border-solid border-stroke", {
+        "border-error": errors?.containers?.[containerIndex]?.fields?.[fieldIndex],
+      })}
+    >
+      <AccordionHeader>
+        <AccordionTrigger className="p-5">
+          <Typography variant="fieldTitle">
+            Поле {fieldIndex + 1}: {fieldTitle}
+          </Typography>
+        </AccordionTrigger>
+      </AccordionHeader>
+      <AccordionContent>
+        <div className="space-y-5">
+          <div className="flex items-center gap-5">
+            <div className="flex-1">
+              <Input
+                label="Название поля"
+                placeholder="Название поля"
+                {...register(`containers.${containerIndex}.fields.${fieldIndex}.field_title`)}
+                error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.field_title}
+              />
+            </div>
+            <div className="flex-1">
+              <Input
+                label="Name поля"
+                placeholder="title"
+                {...register(`containers.${containerIndex}.fields.${fieldIndex}.field_name`)}
+                error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.field_name}
+              />
+            </div>
+            <div className="w-48">
+              <Input
+                label="Размер"
+                placeholder="col-lg-3 col-md-6"
+                {...register(`containers.${containerIndex}.fields.${fieldIndex}.size`)}
+                error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.size}
+              />
+            </div>
+            <div className="w-[88px]">
+              <Button
+                type="button"
+                variant="text"
+                className="h-7 w-fit p-1"
+                onClick={remove}
+                disabled={fields.length === 1}
+                startIcon={
+                  <div className="text-t-black *:h-2.5 *:w-2.5">
+                    <CloseIcon />
+                  </div>
+                }
+              >
+                <Typography variant="itemTitle">Удалить</Typography>
+              </Button>
+              <Button
+                type="button"
+                variant="text"
+                className="h-7 w-fit p-1"
+                disabled={isDisabledMoveUpButton}
+                onClick={() => move("up")}
+                startIcon={
+                  <div className="text-t-black">
+                    <ArrowIcon />
+                  </div>
+                }
+              >
+                <Typography variant="itemTitle">Вверх</Typography>
+              </Button>
+              <Button
+                type="button"
+                variant="text"
+                className="h-7 w-fit p-1"
+                disabled={isDisabledMoveDownButton}
+                onClick={() => move("down")}
+                startIcon={
+                  <div className="rotate-180 text-t-black">
+                    <ArrowIcon />
+                  </div>
+                }
+              >
+                <Typography variant="itemTitle">Вниз</Typography>
+              </Button>
+            </div>
+          </div>
+          <div className="grid max-w-[calc(100%-108px)] grid-cols-2 gap-5">
+            <Input
+              label="Текст под label"
+              placeholder="label"
+              {...register(`containers.${containerIndex}.fields.${fieldIndex}.field_text`)}
+              error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.field_text}
             />
           </div>
-        )}
-      </div>
-      {Field && <Field containerIndex={containerIndex} fieldIndex={fieldIndex} />}
-    </div>
+          <div className="grid max-w-[calc(100%-108px)] grid-cols-2 gap-5">
+            <Controller
+              name={`containers.${containerIndex}.fields.${fieldIndex}.type`}
+              control={control}
+              render={({ field: { name, value, onChange } }) => (
+                <Select
+                  name={name}
+                  label="Тип поля"
+                  placeholder="Оберіть"
+                  options={fieldsTypesArray}
+                  value={fieldsTypesArray.find(c => c.value === value)}
+                  onChange={option => option && onChange(option.value)}
+                  error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.type}
+                />
+              )}
+            />
+            {fieldType === FieldTypeEnum.Select && (
+              <div className="mt-9">
+                <Checkbox
+                  id={`is-multi-select-${containerIndex}-${fieldIndex}`}
+                  label="Мультиселект"
+                  checked={isMultiSelect ?? false}
+                  onCheckedChange={handleChangeMultiSelect}
+                />
+              </div>
+            )}
+          </div>
+          {Field && <Field containerIndex={containerIndex} fieldIndex={fieldIndex} />}
+        </div>
+      </AccordionContent>
+    </AccordionItem>
   )
 }
 export default FormField

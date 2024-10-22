@@ -8,6 +8,7 @@ import {
   useDeleteFillableContainerMutation,
 } from "@services/fillable-forms-service"
 
+import { Accordion } from "@shared/ui/accordion"
 import { Button } from "@shared/ui/buttons"
 import { Input } from "@shared/ui/fields"
 import { Typography } from "@shared/ui/typography"
@@ -167,15 +168,17 @@ const FormContainer: FC<FormContainerProps> = ({
           </Button>
         </div>
       </div>
-      {fields.map((item, index) => (
-        <FormField
-          key={item.id}
-          containerIndex={containerIndex}
-          fieldIndex={index}
-          removeField={removeField}
-          moveField={moveFeild}
-        />
-      ))}
+      <Accordion type="multiple" className="space-y-10">
+        {fields.map((item, index) => (
+          <FormField
+            key={item.id}
+            containerIndex={containerIndex}
+            fieldIndex={index}
+            removeField={removeField}
+            moveField={moveFeild}
+          />
+        ))}
+      </Accordion>
       <div className="flex justify-center">
         <Button
           type="button"

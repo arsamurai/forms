@@ -51,7 +51,6 @@ const fieldSchema = z
     options_route: z.string().nullable().optional(),
     route_param: z.string().nullable().optional(),
     is_multiselect: z.boolean().nullable().optional(),
-    upload_route: z.string().nullable().optional(),
     max_files: z.number().nullable().optional(),
     max_file_size: z.number().nullable().optional(),
     max_resolution: z.string().nullable().optional(),
@@ -106,10 +105,16 @@ const fieldSchema = z
         })
       }
     } else if (data.type === "image") {
-      if (!data.upload_route) {
+      if (!data.image_upload_route) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          path: ["upload_route"],
+          path: ["image_upload_route"],
+        })
+      }
+      if (!data.image_delete_route) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["image_delete_route"],
         })
       }
       if (!data.upload_param) {
@@ -136,6 +141,12 @@ const fieldSchema = z
           path: ["max_resolution"],
         })
       }
+      if (!data.file_types) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["file_types"],
+        })
+      }
       if (!data.folder_hierarchy_complexity) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
@@ -143,10 +154,16 @@ const fieldSchema = z
         })
       }
     } else if (data.type === "multi_image") {
-      if (!data.upload_route) {
+      if (!data.image_upload_route) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          path: ["upload_route"],
+          path: ["image_upload_route"],
+        })
+      }
+      if (!data.image_delete_route) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["image_delete_route"],
         })
       }
       if (!data.upload_param) {

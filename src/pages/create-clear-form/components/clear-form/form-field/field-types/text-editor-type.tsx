@@ -36,7 +36,7 @@ const TextEditorType: FC<{ containerIndex: number; fieldIndex: number }> = ({
         <div className="flex-1">
           <Input
             label="Роут для удаления изображений"
-            placeholder="/api/v1/upload/image"
+            placeholder="/api/v1/remove/image"
             {...register(`containers.${containerIndex}.fields.${fieldIndex}.image_delete_route`)}
             error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.image_delete_route}
           />
