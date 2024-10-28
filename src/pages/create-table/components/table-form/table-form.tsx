@@ -64,7 +64,6 @@ const TableForm: FC<{ table?: TableEntity }> = ({ table }) => {
       api_command_name: "",
       color: "",
       action_type: "",
-      action: "",
       api_route: "",
       show_alert: 0,
       alert_message: "",

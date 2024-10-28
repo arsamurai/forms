@@ -2,21 +2,23 @@ import { FC, useEffect } from "react"
 import { Controller, useFormContext } from "react-hook-form"
 
 import {
+  ButtonActionTypeEnum,
   TableSchema,
   useChangeTableButtonsOrderMutation,
   useDeleteTableButtonMutation,
 } from "@services/tables-service"
+import { useWebpagesQuery } from "@services/webpages-service"
 
 import { Button } from "@shared/ui/buttons"
 import { ColorPicker } from "@shared/ui/color-picker"
 import { Checkbox, Input, Select } from "@shared/ui/fields"
 import { Typography } from "@shared/ui/typography"
+import { formatSelectOptions } from "@shared/utils/format-select-options"
 
 import ArrowIcon from "@assets/icons/arrow.svg"
 import CloseIcon from "@assets/icons/close.svg"
 
 import { buttonActionTypesArray } from "./constants/button-action-types-array"
-import { buttonActionsArray } from "./constants/button-actions-array"
 import { TableButtonProps } from "./table-button.types"
 
 const TableButton: FC<TableButtonProps> = ({ buttonIndex, removeButton, moveButton }) => {
@@ -39,12 +41,18 @@ const TableButton: FC<TableButtonProps> = ({ buttonIndex, removeButton, moveButt
   const nextButtonId = getValues(`buttons.${buttonIndex + 1}.id`)
   const buttonTitle = watch(`buttons.${buttonIndex}.title`)
   const buttonShowAlert = watch(`buttons.${buttonIndex}.show_alert`)
+  const actionType = watch(`buttons.${buttonIndex}.action_type`)
   const isDisabledMoveUpButton =
     (!buttonId && !!prevButtonId) || buttonIndex === 0 || changeButtonsOrder.isPending
   const isDisabledMoveDownButton =
     (!!buttonId && !nextButtonId) ||
     buttonIndex + 1 === buttons?.length ||
     changeButtonsOrder.isPending
+
+  const { data: webPages, isLoading: isLoadingOnWebPages } = useWebpagesQuery(
+    actionType === ButtonActionTypeEnum.GoToPage,
+  )
+  const webPagesOptions = formatSelectOptions(webPages)
 
   const changeButtonColor = (newColor: string) => {
     setValue(`buttons.${buttonIndex}.color`, newColor, {
@@ -104,7 +112,7 @@ const TableButton: FC<TableButtonProps> = ({ buttonIndex, removeButton, moveButt
           <Typography variant="pageSubtitle">
             Кнопка {buttonIndex + 1}: {buttonTitle}
           </Typography>
-          <div className="flex items-end gap-5">
+          <div className="grid grid-cols-3 items-end gap-5">
             <div className="flex-1">
               <Input
                 label="Название кнопки"
@@ -127,7 +135,7 @@ const TableButton: FC<TableButtonProps> = ({ buttonIndex, removeButton, moveButt
               />
             </div>
           </div>
-          <div className="flex items-end gap-5">
+          <div className="grid grid-cols-3 items-end gap-5">
             <div className="flex-1">
               <span className="select-none font-montserrat-medium text-sm text-t-black">
                 Цвет кнопки
@@ -145,29 +153,37 @@ const TableButton: FC<TableButtonProps> = ({ buttonIndex, removeButton, moveButt
                     placeholder="Оберіть"
                     options={buttonActionTypesArray}
                     value={buttonActionTypesArray.find(c => c.value === value)}
-                    onChange={option => option && onChange(option.value)}
+                    onChange={option => {
+                      if (option) {
+                        setValue(`buttons.${buttonIndex}.action`, null)
+                        onChange(option.value)
+                      }
+                    }}
                     error={!!errors?.buttons?.[buttonIndex]?.action_type}
                   />
                 )}
               />
             </div>
-            <div className="flex-1">
-              <Controller
-                name={`buttons.${buttonIndex}.action`}
-                control={control}
-                render={({ field: { name, value, onChange } }) => (
-                  <Select
-                    name={name}
-                    label="Выбор из списка действия"
-                    placeholder="Оберіть"
-                    options={buttonActionsArray}
-                    value={buttonActionsArray.find(c => c.value === value)}
-                    onChange={option => option && onChange(option.value)}
-                    error={!!errors?.buttons?.[buttonIndex]?.action}
-                  />
-                )}
-              />
-            </div>
+            {actionType === ButtonActionTypeEnum.GoToPage && (
+              <div className="flex-1">
+                <Controller
+                  name={`buttons.${buttonIndex}.action`}
+                  control={control}
+                  render={({ field: { name, value, onChange } }) => (
+                    <Select
+                      name={name}
+                      label="Выбор из списка действия"
+                      placeholder="Оберіть"
+                      isLoading={isLoadingOnWebPages}
+                      options={webPagesOptions}
+                      value={webPagesOptions?.find(c => c.value === Number(value))}
+                      onChange={option => option && onChange(option.value)}
+                      error={!!errors?.buttons?.[buttonIndex]?.action}
+                    />
+                  )}
+                />
+              </div>
+            )}
           </div>
           <div className="grid grid-cols-3 gap-5">
             <Input

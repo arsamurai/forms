@@ -18,7 +18,6 @@ export {
   type TableSchema,
   QueryFieldsEnum,
   ButtonActionTypeEnum,
-  ButtonActionEnum,
   ColumnTypeEnum,
   tableSchema,
 } from "./tables-service.validation"

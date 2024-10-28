@@ -13,12 +13,6 @@ export enum ButtonActionTypeEnum {
   Offcanvas = "offcanvas",
 }
 
-export enum ButtonActionEnum {
-  ActionFirst = "actionFirst",
-  ActionSecond = "actionSecond",
-  ActionThird = "actionThird",
-}
-
 export enum ColumnTypeEnum {
   Text = "text",
   Link = "link",
@@ -29,7 +23,6 @@ export enum ColumnTypeEnum {
 
 const QueryFieldsSchema = z.nativeEnum(QueryFieldsEnum)
 const ButtonActionTypeSchema = z.nativeEnum(ButtonActionTypeEnum)
-const ButtonActionSchema = z.nativeEnum(ButtonActionEnum)
 const ColumnTypeSchema = z.nativeEnum(ColumnTypeEnum)
 
 const buttonSchema = z
@@ -43,7 +36,7 @@ const buttonSchema = z
     color: z.string().min(1),
     api_route: z.string().min(1),
     action_type: z.string(ButtonActionTypeSchema).min(1),
-    action: z.string(ButtonActionSchema).min(1),
+    action: z.union([z.number(), z.string()]).nullable().optional(),
     show_alert: z.union([z.literal(0), z.literal(1), z.null()]).optional(),
     alert_message: z.string().optional(),
   })
@@ -53,6 +46,14 @@ const buttonSchema = z
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           path: ["alert_message"],
+        })
+      }
+    }
+    if (data.action_type === "GoToPage") {
+      if (!data.action) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["action"],
         })
       }
     }
