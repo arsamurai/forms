@@ -223,6 +223,8 @@ export const fillableFormSchema = z.object({
   api_command_name: z.string().min(1),
   api_parameters: z.string().min(1),
   api_route: z.string().min(1),
+  route_to_fill_form: z.string().min(1),
+  passed_parameters: z.string().min(1),
   containers: z.array(containerSchema),
 })
 

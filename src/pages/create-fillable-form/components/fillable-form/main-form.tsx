@@ -13,7 +13,7 @@ const MainForm = () => {
   return (
     <div className="space-y-10">
       <div className="flex items-end gap-5">
-        <div className="w-1/2">
+        <div className="flex-1">
           <Input
             label="Название"
             placeholder="Название формы"
@@ -21,7 +21,7 @@ const MainForm = () => {
             error={!!errors?.title}
           />
         </div>
-        <div className="w-1/2">
+        <div className="flex-1">
           <Input
             label="Уникальный Name"
             placeholder="form_001"
@@ -31,7 +31,7 @@ const MainForm = () => {
         </div>
       </div>
       <div className="flex items-end gap-5">
-        <div className="w-1/2">
+        <div className="flex-1">
           <Input
             label="Название команды к API"
             placeholder="saveProductById"
@@ -39,7 +39,7 @@ const MainForm = () => {
             error={!!errors?.api_command_name}
           />
         </div>
-        <div className="w-1/2">
+        <div className="flex-1">
           <Input
             label="Параметры к команде"
             placeholder='{"method": "POST", "headers": {"Content-Type": "application/json"}}'
@@ -48,13 +48,31 @@ const MainForm = () => {
           />
         </div>
       </div>
-      <div className="w-1/2 pr-2.5">
+      <div className="grid grid-cols-2 gap-5">
         <Input
           label="Роут api для отправки данных с формы"
           placeholder="/api/v1"
           {...register("api_route")}
           error={!!errors?.api_route}
         />
+      </div>
+      <div className="flex items-end gap-5">
+        <div className="flex-1">
+          <Input
+            label="Роут для заполнения формы"
+            placeholder="/api/v1"
+            {...register("route_to_fill_form")}
+            error={!!errors?.route_to_fill_form}
+          />
+        </div>
+        <div className="flex-1">
+          <Input
+            label="Параметры к команде"
+            placeholder="id, email, date"
+            {...register("passed_parameters")}
+            error={!!errors?.passed_parameters}
+          />
+        </div>
       </div>
     </div>
   )
