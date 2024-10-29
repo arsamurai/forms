@@ -34,13 +34,29 @@ const buttonSchema = z
     api_key_param: z.string().min(1),
     api_command_name: z.string().min(1),
     color: z.string().min(1),
-    api_route: z.string().min(1),
     action_type: z.string(ButtonActionTypeSchema).min(1),
+    api_route: z.string().optional(),
     action: z.union([z.number(), z.string()]).nullable().optional(),
     show_alert: z.union([z.literal(0), z.literal(1), z.null()]).optional(),
     alert_message: z.string().optional(),
   })
   .superRefine((data, ctx) => {
+    if (data.action_type === "sendRequest") {
+      if (!data.api_route) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["api_route"],
+        })
+      }
+    }
+    if (data.action_type === "goToPage") {
+      if (!data.action) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["action"],
+        })
+      }
+    }
     if (data.show_alert === 1) {
       if (!data.alert_message) {
         ctx.addIssue({

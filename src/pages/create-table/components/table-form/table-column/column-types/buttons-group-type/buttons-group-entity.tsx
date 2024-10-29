@@ -172,6 +172,13 @@ const ButtonsGroupEntity: FC<TableButtonProps & { columnIndex: number }> = ({
                 )}
               />
             </div>
+            {actionType === ButtonActionTypeEnum.SendRequest && (
+              <Input
+                label="Роут для API"
+                {...register(`columns.${columnIndex}.buttons.${buttonIndex}.api_route`)}
+                error={!!errors?.columns?.[columnIndex]?.buttons?.[buttonIndex]?.api_route}
+              />
+            )}
             {actionType === ButtonActionTypeEnum.GoToPage && (
               <div className="flex-1">
                 <Controller
@@ -186,19 +193,12 @@ const ButtonsGroupEntity: FC<TableButtonProps & { columnIndex: number }> = ({
                       options={webPagesOptions}
                       value={webPagesOptions?.find(c => c.value === Number(value))}
                       onChange={option => option && onChange(option.value)}
-                      error={!!errors?.buttons?.[buttonIndex]?.action}
+                      error={!!errors?.columns?.[columnIndex]?.buttons?.[buttonIndex]?.action}
                     />
                   )}
                 />
               </div>
             )}
-          </div>
-          <div className="grid grid-cols-3 gap-5">
-            <Input
-              label="Роут для API"
-              {...register(`columns.${columnIndex}.buttons.${buttonIndex}.api_route`)}
-              error={!!errors?.columns?.[columnIndex]?.buttons?.[buttonIndex]?.api_route}
-            />
           </div>
           <div className="flex gap-5">
             <div className="w-full max-w-[786px]">

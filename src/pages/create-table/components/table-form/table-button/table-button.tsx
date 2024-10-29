@@ -164,6 +164,13 @@ const TableButton: FC<TableButtonProps> = ({ buttonIndex, removeButton, moveButt
                 )}
               />
             </div>
+            {actionType === ButtonActionTypeEnum.SendRequest && (
+              <Input
+                label="Роут для API"
+                {...register(`buttons.${buttonIndex}.api_route`)}
+                error={!!errors?.buttons?.[buttonIndex]?.api_route}
+              />
+            )}
             {actionType === ButtonActionTypeEnum.GoToPage && (
               <div className="flex-1">
                 <Controller
@@ -184,13 +191,6 @@ const TableButton: FC<TableButtonProps> = ({ buttonIndex, removeButton, moveButt
                 />
               </div>
             )}
-          </div>
-          <div className="grid grid-cols-3 gap-5">
-            <Input
-              label="Роут для API"
-              {...register(`buttons.${buttonIndex}.api_route`)}
-              error={!!errors?.buttons?.[buttonIndex]?.api_route}
-            />
           </div>
           <div className="flex gap-5">
             <div className="w-full max-w-[786px]">
