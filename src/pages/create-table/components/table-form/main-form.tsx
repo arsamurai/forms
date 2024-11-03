@@ -38,22 +38,30 @@ const MainForm: FC<{ addButton: () => void }> = ({ addButton }) => {
   return (
     <div className="space-y-10">
       <div className="flex items-end gap-5">
-        <div className="w-1/2">
+        <div className="flex-1">
           <Input label="Название" {...register("title")} error={!!errors?.title} />
         </div>
-        <div className="w-1/2">
+        <div className="flex-1">
           <Input label="Уникальный Name" {...register("unique_id")} error={!!errors?.unique_id} />
         </div>
       </div>
       <div className="flex items-end gap-5">
-        <div className="w-1/2">
+        <div className="flex-1">
           <Input
             label="Роут для получения данных с api"
             {...register("api_route")}
             error={!!errors?.api_route}
           />
         </div>
-        <div className="w-1/2">
+        <div className="flex-1">
+          <Input
+            label="Параметры к команде"
+            placeholder="id, email, date"
+            {...register("passed_parameters")}
+            error={!!errors?.passed_parameters}
+          />
+        </div>
+        <div className="flex-1">
           <Controller
             name="per_page"
             control={control}
@@ -74,7 +82,7 @@ const MainForm: FC<{ addButton: () => void }> = ({ addButton }) => {
         </div>
       </div>
       <div className="flex items-end gap-5">
-        <div className="w-1/2">
+        <div className="flex-1">
           <Controller
             name="query_fields"
             control={control}
@@ -92,7 +100,7 @@ const MainForm: FC<{ addButton: () => void }> = ({ addButton }) => {
             )}
           />
         </div>
-        <div className="flex w-1/2 items-center gap-5">
+        <div className="flex flex-1 items-center gap-5">
           <Button
             type="button"
             variant="secondary"

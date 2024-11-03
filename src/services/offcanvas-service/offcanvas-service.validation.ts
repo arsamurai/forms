@@ -1,6 +1,6 @@
 import z from "zod"
 
-import { EntityTypeSchema } from "@shared/constants/entities"
+import { EntityTypeSchema } from "@shared/constants"
 
 export const offcanvasSchema = z.object({
   id: z.number().optional(),

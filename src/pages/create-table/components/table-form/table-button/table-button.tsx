@@ -1,6 +1,7 @@
-import { FC, useEffect } from "react"
+import { FC } from "react"
 import { Controller, useFormContext } from "react-hook-form"
 
+import { useModalsQuery } from "@services/modals-service"
 import {
   ButtonActionTypeEnum,
   TableSchema,
@@ -9,8 +10,8 @@ import {
 } from "@services/tables-service"
 import { useWebpagesQuery } from "@services/webpages-service"
 
+import { buttonVariantsArray } from "@shared/constants"
 import { Button } from "@shared/ui/buttons"
-import { ColorPicker } from "@shared/ui/color-picker"
 import { Checkbox, Input, Select } from "@shared/ui/fields"
 import { Typography } from "@shared/ui/typography"
 import { formatSelectOptions } from "@shared/utils/format-select-options"
@@ -36,7 +37,6 @@ const TableButton: FC<TableButtonProps> = ({ buttonIndex, removeButton, moveButt
 
   const buttons = getValues("buttons")
   const buttonId = getValues(`buttons.${buttonIndex}.id`)
-  const buttonColor = watch(`buttons.${buttonIndex}.color`)
   const prevButtonId = getValues(`buttons.${buttonIndex - 1}.id`)
   const nextButtonId = getValues(`buttons.${buttonIndex + 1}.id`)
   const buttonTitle = watch(`buttons.${buttonIndex}.title`)
@@ -52,12 +52,57 @@ const TableButton: FC<TableButtonProps> = ({ buttonIndex, removeButton, moveButt
   const { data: webPages, isLoading: isLoadingOnWebPages } = useWebpagesQuery(
     actionType === ButtonActionTypeEnum.GoToPage,
   )
-  const webPagesOptions = formatSelectOptions(webPages)
+  const { data: modals, isLoading: isLoadingOnModals } = useModalsQuery(
+    actionType === ButtonActionTypeEnum.OpenModal,
+  )
+  const isActionLoading = isLoadingOnWebPages || isLoadingOnModals
 
-  const changeButtonColor = (newColor: string) => {
-    setValue(`buttons.${buttonIndex}.color`, newColor, {
-      shouldDirty: true,
-    })
+  const getActionOptions = () => {
+    switch (actionType) {
+      case ButtonActionTypeEnum.GoToPage:
+        return formatSelectOptions(webPages)
+      case ButtonActionTypeEnum.OpenModal:
+        return formatSelectOptions(modals)
+      default:
+        return []
+    }
+  }
+
+  const getSpecialField = () => {
+    switch (actionType) {
+      case ButtonActionTypeEnum.SendRequest:
+        return (
+          <div className="flex-1">
+            <Input
+              label="Роут для API"
+              {...register(`buttons.${buttonIndex}.api_route`)}
+              error={!!errors?.buttons?.[buttonIndex]?.api_route}
+            />
+          </div>
+        )
+      case ButtonActionTypeEnum.GoToPage:
+      case ButtonActionTypeEnum.OpenModal:
+        return (
+          <div className="flex-1">
+            <Controller
+              name={`buttons.${buttonIndex}.action`}
+              control={control}
+              render={({ field: { name, value, onChange } }) => (
+                <Select
+                  name={name}
+                  label="Выбор из списка действия"
+                  placeholder="Оберіть"
+                  isLoading={isActionLoading}
+                  options={getActionOptions()}
+                  value={getActionOptions()?.find(c => c.value === Number(value)) ?? null}
+                  onChange={option => option && onChange(option.value)}
+                  error={!!errors?.buttons?.[buttonIndex]?.action}
+                />
+              )}
+            />
+          </div>
+        )
+    }
   }
 
   const handleChangeShowAlert = () => {
@@ -100,11 +145,6 @@ const TableButton: FC<TableButtonProps> = ({ buttonIndex, removeButton, moveButt
     removeButton(buttonIndex)
   }
 
-  useEffect(() => {
-    if (!buttonColor) changeButtonColor("#aabbcc")
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   return (
     <div className="rounded-[20px] border border-solid border-stroke p-8">
       <div className="flex gap-5">
@@ -137,10 +177,21 @@ const TableButton: FC<TableButtonProps> = ({ buttonIndex, removeButton, moveButt
           </div>
           <div className="grid grid-cols-3 items-end gap-5">
             <div className="flex-1">
-              <span className="select-none font-montserrat-medium text-sm text-t-black">
-                Цвет кнопки
-              </span>
-              <ColorPicker color={buttonColor} changeColor={changeButtonColor} />
+              <Controller
+                name={`buttons.${buttonIndex}.color`}
+                control={control}
+                render={({ field: { name, value, onChange } }) => (
+                  <Select
+                    name={name}
+                    label="Вариант кнопки"
+                    placeholder="Оберіть"
+                    options={buttonVariantsArray}
+                    value={buttonVariantsArray.find(c => c.value === value)}
+                    onChange={option => option && onChange(option.value)}
+                    error={!!errors?.buttons?.[buttonIndex]?.color}
+                  />
+                )}
+              />
             </div>
             <div className="flex-1">
               <Controller
@@ -155,6 +206,7 @@ const TableButton: FC<TableButtonProps> = ({ buttonIndex, removeButton, moveButt
                     value={buttonActionTypesArray.find(c => c.value === value)}
                     onChange={option => {
                       if (option) {
+                        setValue(`buttons.${buttonIndex}.api_route`, "")
                         setValue(`buttons.${buttonIndex}.action`, null)
                         onChange(option.value)
                       }
@@ -164,33 +216,7 @@ const TableButton: FC<TableButtonProps> = ({ buttonIndex, removeButton, moveButt
                 )}
               />
             </div>
-            {actionType === ButtonActionTypeEnum.SendRequest && (
-              <Input
-                label="Роут для API"
-                {...register(`buttons.${buttonIndex}.api_route`)}
-                error={!!errors?.buttons?.[buttonIndex]?.api_route}
-              />
-            )}
-            {actionType === ButtonActionTypeEnum.GoToPage && (
-              <div className="flex-1">
-                <Controller
-                  name={`buttons.${buttonIndex}.action`}
-                  control={control}
-                  render={({ field: { name, value, onChange } }) => (
-                    <Select
-                      name={name}
-                      label="Выбор из списка действия"
-                      placeholder="Оберіть"
-                      isLoading={isLoadingOnWebPages}
-                      options={webPagesOptions}
-                      value={webPagesOptions?.find(c => c.value === Number(value))}
-                      onChange={option => option && onChange(option.value)}
-                      error={!!errors?.buttons?.[buttonIndex]?.action}
-                    />
-                  )}
-                />
-              </div>
-            )}
+            {getSpecialField()}
           </div>
           <div className="flex gap-5">
             <div className="w-full max-w-[786px]">

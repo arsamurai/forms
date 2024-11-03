@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react"
+import { FC } from "react"
 import { Controller, useFormContext } from "react-hook-form"
 
 import {
@@ -9,8 +9,8 @@ import {
 } from "@services/tables-service"
 import { useWebpagesQuery } from "@services/webpages-service"
 
+import { buttonVariantsArray } from "@shared/constants"
 import { Button } from "@shared/ui/buttons"
-import { ColorPicker } from "@shared/ui/color-picker"
 import { Checkbox, Input, Select } from "@shared/ui/fields"
 import { Typography } from "@shared/ui/typography"
 import { formatSelectOptions } from "@shared/utils/format-select-options"
@@ -40,7 +40,6 @@ const ButtonsGroupEntity: FC<TableButtonProps & { columnIndex: number }> = ({
 
   const buttons = getValues(`columns.${columnIndex}.buttons`) ?? []
   const buttonId = getValues(`columns.${columnIndex}.buttons.${buttonIndex}.id`)
-  const buttonColor = watch(`columns.${columnIndex}.buttons.${buttonIndex}.color`)
   const prevButtonId = getValues(`columns.${columnIndex}.buttons.${buttonIndex - 1}.id`)
   const nextButtonId = getValues(`columns.${columnIndex}.buttons.${buttonIndex + 1}.id`)
   const buttonTitle = watch(`columns.${columnIndex}.buttons.${buttonIndex}.title`)
@@ -57,12 +56,6 @@ const ButtonsGroupEntity: FC<TableButtonProps & { columnIndex: number }> = ({
     actionType === ButtonActionTypeEnum.GoToPage,
   )
   const webPagesOptions = formatSelectOptions(webPages)
-
-  const changeButtonColor = (newColor: string) => {
-    setValue(`columns.${columnIndex}.buttons.${buttonIndex}.color`, newColor, {
-      shouldDirty: true,
-    })
-  }
 
   const handleChangeShowAlert = () => {
     setValue(
@@ -108,11 +101,6 @@ const ButtonsGroupEntity: FC<TableButtonProps & { columnIndex: number }> = ({
     removeButton(buttonIndex)
   }
 
-  useEffect(() => {
-    if (!buttonColor) changeButtonColor("#aabbcc")
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   return (
     <div className="rounded-[20px] border border-solid border-stroke p-8">
       <div className="flex gap-5">
@@ -145,10 +133,21 @@ const ButtonsGroupEntity: FC<TableButtonProps & { columnIndex: number }> = ({
           </div>
           <div className="grid grid-cols-3 items-end gap-5">
             <div className="flex-1">
-              <span className="select-none font-montserrat-medium text-sm text-t-black">
-                Цвет кнопки
-              </span>
-              <ColorPicker color={buttonColor ?? "#aabbcc"} changeColor={changeButtonColor} />
+              <Controller
+                name={`columns.${columnIndex}.buttons.${buttonIndex}.color`}
+                control={control}
+                render={({ field: { name, value, onChange } }) => (
+                  <Select
+                    name={name}
+                    label="Вариант кнопки"
+                    placeholder="Оберіть"
+                    options={buttonVariantsArray}
+                    value={buttonVariantsArray.find(c => c.value === value)}
+                    onChange={option => option && onChange(option.value)}
+                    error={!!errors?.columns?.[columnIndex]?.buttons?.[buttonIndex]?.color}
+                  />
+                )}
+              />
             </div>
             <div className="flex-1">
               <Controller

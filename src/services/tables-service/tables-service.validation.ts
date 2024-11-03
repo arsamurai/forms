@@ -158,6 +158,7 @@ export const tableSchema = z.object({
   title: z.string().min(1),
   unique_id: z.string().min(1),
   api_route: z.string().min(1),
+  passed_parameters: z.string().optional(),
   per_page: z.number().min(1),
   query_fields: z.array(QueryFieldsSchema).nonempty(),
   enable_search: z.union([z.literal(0), z.literal(1), z.null()]).optional(),

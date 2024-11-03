@@ -14,8 +14,7 @@ import {
 } from "@services/modals-service"
 import { useTablesQuery } from "@services/tables-service"
 
-import { ROUTES } from "@shared/constants"
-import { EntityTypeEnum, entityTypeArray } from "@shared/constants/entities"
+import { EntityTypeEnum, ROUTES, entityTypeArray } from "@shared/constants"
 import { Button } from "@shared/ui/buttons"
 import { Input, Select } from "@shared/ui/fields"
 import { showToast } from "@shared/ui/toastify"
