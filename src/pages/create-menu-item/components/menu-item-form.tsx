@@ -99,7 +99,12 @@ const MenuItemForm: FC<{ menuItem?: MenuItemEntity["comment"] }> = ({ menuItem }
           </div>
         </div>
         <div className="w-full">
-          <IconsPicker icon={icon} changeIcon={handleChangeIcon} error={!!errors?.icon} />
+          <IconsPicker
+            icon={icon}
+            changeIcon={handleChangeIcon}
+            error={!!errors?.icon}
+            className="w-[calc(100vw-32px)] max-w-[1300px]"
+          />
         </div>
       </div>
       <div className="flex gap-4">

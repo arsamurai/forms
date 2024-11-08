@@ -11,6 +11,7 @@ import {
 
 import { Button } from "@shared/ui/buttons"
 import { Input, Select } from "@shared/ui/fields"
+import { IconsPicker } from "@shared/ui/icons-picker"
 import { Typography } from "@shared/ui/typography"
 import { formatSelectOptions } from "@shared/utils/format-select-options"
 
@@ -22,15 +23,18 @@ import { ViewTabProps } from "./view-tab.types"
 const ViewTab: FC<ViewTabProps> = ({ tabIndex, removeTab, moveTab }) => {
   const deleteTab = useDeleteViewTabMutation()
   const changeTabsOrder = useChangeViewTabsOrderMutation()
+  const { data: viewList, isLoading: isLoadingOnViewList } = useViewListQuery()
 
   const {
     register,
     control,
     getValues,
+    setValue,
     watch,
     formState: { errors },
   } = useFormContext<ViewSchema>()
 
+  const icon = watch(`tabs.${tabIndex}.icon`)
   const tabs = getValues("tabs")
   const tabId = getValues(`tabs.${tabIndex}.id`)
   const prevTabId = getValues(`tabs.${tabIndex - 1}.id`)
@@ -42,7 +46,6 @@ const ViewTab: FC<ViewTabProps> = ({ tabIndex, removeTab, moveTab }) => {
   const isDisabledMoveDownButton =
     (!!tabId && !nextTabId) || tabIndex + 1 === tabs?.length || changeTabsOrder.isPending
 
-  const { data: viewList, isLoading: isLoadingOnViewList } = useViewListQuery()
   const viewListOptions = formatSelectOptions(
     viewList?.filter(item => item.type === ViewTypeEnum.BLOCKS),
   )
@@ -79,6 +82,12 @@ const ViewTab: FC<ViewTabProps> = ({ tabIndex, removeTab, moveTab }) => {
   const remove = () => {
     if (tabId) deleteTab.mutate(tabId)
     removeTab(tabIndex)
+  }
+
+  const handleChangeIcon = (newId: string) => {
+    setValue(`tabs.${tabIndex}.icon`, newId, {
+      shouldDirty: true,
+    })
   }
 
   return (
@@ -123,19 +132,20 @@ const ViewTab: FC<ViewTabProps> = ({ tabIndex, removeTab, moveTab }) => {
                 )}
               />
             </div>
+            <div className="flex-1">
+              <Input
+                label="Параметры к отображению"
+                {...register(`tabs.${tabIndex}.params`)}
+                error={!!errors?.tabs?.[tabIndex]?.params}
+              />
+            </div>
           </div>
-          <div className="w-full max-w-[484px]">
-            <Input
-              label="Параметры к отображению"
-              {...register(`tabs.${tabIndex}.params`)}
-              error={!!errors?.tabs?.[tabIndex]?.params}
-            />
-          </div>
-          <div className="sm:w-48">
-            <Input
-              label="Иконка"
-              {...register(`tabs.${tabIndex}.icon`)}
+          <div className="flex-1">
+            <IconsPicker
+              icon={icon}
+              changeIcon={handleChangeIcon}
               error={!!errors?.tabs?.[tabIndex]?.icon}
+              className="w-[calc(100vw-206px)] max-w-[1126px]"
             />
           </div>
         </div>

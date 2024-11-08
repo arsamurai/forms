@@ -6,13 +6,17 @@ import { cn } from "@shared/utils/cn"
 import { icons } from "./icons-array"
 import { IconsPickerProps } from "./icons-picker.types"
 
-const IconsPicker: FC<IconsPickerProps> = ({ icon, changeIcon, error }) => {
+const IconsPicker: FC<IconsPickerProps> = ({ icon, changeIcon, error, className }) => {
   const selectedIcon = icons.find(item => item.id === icon)
 
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <div className={cn("cursor-pointer space-y-1.5 text-t-black", { "text-error": error })}>
+        <div
+          className={cn("cursor-pointer space-y-1.5 text-t-black", {
+            "text-error": error,
+          })}
+        >
           <div className="select-none font-montserrat-medium text-sm text-current">
             Выбор иконок
           </div>
@@ -28,7 +32,7 @@ const IconsPicker: FC<IconsPickerProps> = ({ icon, changeIcon, error }) => {
           </div>
         </div>
       </PopoverTrigger>
-      <PopoverContent className="flex flex-wrap gap-5">
+      <PopoverContent className={cn("flex flex-wrap gap-5 bg-white", className)}>
         {icons.map(item => (
           <span
             key={item.id}

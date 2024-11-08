@@ -117,13 +117,6 @@ const columnSchema = z
           path: ["api_key_param"],
         })
       }
-    } else if (data.column_type === "badge") {
-      if (!data.get_list_route) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ["get_list_route"],
-        })
-      }
     } else if (data.column_type === "switch") {
       if (!data.api_route) {
         ctx.addIssue({

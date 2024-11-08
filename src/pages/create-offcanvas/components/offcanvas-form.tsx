@@ -3,8 +3,6 @@ import { FC } from "react"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import { Link } from "react-router-dom"
 
-import { useClearFormsQuery } from "@services/clear-forms-service"
-import { useFillableFormsQuery } from "@services/fillable-forms-service"
 import {
   OffcanvasEntity,
   OffcanvasSchema,
@@ -12,9 +10,9 @@ import {
   useAddOffcanvasMutation,
   useEditOffcanvasMutation,
 } from "@services/offcanvas-service"
-import { useTablesQuery } from "@services/tables-service"
+import { useViewListQuery } from "@services/view-service"
 
-import { EntityTypeEnum, ROUTES, entityTypeArray } from "@shared/constants"
+import { ROUTES } from "@shared/constants"
 import { Button } from "@shared/ui/buttons"
 import { Input, Select } from "@shared/ui/fields"
 import { showToast } from "@shared/ui/toastify"
@@ -24,13 +22,12 @@ import { formatSelectOptions } from "@shared/utils/format-select-options"
 const OffcanvasForm: FC<{ offcanvas?: OffcanvasEntity }> = ({ offcanvas }) => {
   const addOffcanvas = useAddOffcanvasMutation()
   const editOffcanvas = useEditOffcanvasMutation()
+  const { data: viewList, isLoading: isLoadingOnViewList } = useViewListQuery()
 
   const {
     register,
     control,
     reset,
-    setValue,
-    watch,
     handleSubmit,
     formState: { isDirty, errors },
   } = useForm<OffcanvasSchema>({
@@ -39,32 +36,8 @@ const OffcanvasForm: FC<{ offcanvas?: OffcanvasEntity }> = ({ offcanvas }) => {
     shouldFocusError: false,
   })
 
-  const entityType = watch("entity_type")
   const isSubmitButtonDisabled = !isDirty || addOffcanvas.isPending || editOffcanvas.isPending
-
-  const { data: tables, isLoading: isLoadingOnTables } = useTablesQuery(
-    entityType === EntityTypeEnum.Table,
-  )
-  const { data: clearForms, isLoading: isLoadingOnClearForms } = useClearFormsQuery(
-    entityType === EntityTypeEnum.ClearForm,
-  )
-  const { data: fillableForms, isLoading: isLoadingOnFillableForms } = useFillableFormsQuery(
-    entityType === EntityTypeEnum.FillableForm,
-  )
-  const isEntityIdLoading = isLoadingOnTables || isLoadingOnClearForms || isLoadingOnFillableForms
-
-  const getEntityIdOptions = () => {
-    switch (entityType) {
-      case EntityTypeEnum.Table:
-        return formatSelectOptions(tables)
-      case EntityTypeEnum.ClearForm:
-        return formatSelectOptions(clearForms)
-      case EntityTypeEnum.FillableForm:
-        return formatSelectOptions(fillableForms)
-      default:
-        return []
-    }
-  }
+  const viewListOptions = formatSelectOptions(viewList)
 
   const onSubmit: SubmitHandler<OffcanvasSchema> = async data => {
     try {
@@ -96,31 +69,9 @@ const OffcanvasForm: FC<{ offcanvas?: OffcanvasEntity }> = ({ offcanvas }) => {
             <Input label="Уникальный ID" {...register("unique_id")} error={!!errors?.unique_id} />
           </div>
         </div>
-        <div className="w-full">
-          <Input label="Роут" {...register("route")} error={!!errors?.route} />
-        </div>
         <div className="flex justify-between gap-5">
           <div className="flex-1">
-            <Controller
-              name="entity_type"
-              control={control}
-              render={({ field: { name, value, onChange } }) => (
-                <Select
-                  name={name}
-                  label="Тип"
-                  placeholder="Оберіть"
-                  options={entityTypeArray}
-                  value={entityTypeArray.find(c => c.value === value)}
-                  onChange={option => {
-                    if (option) {
-                      onChange(option.value)
-                      setValue("entity_id", 0)
-                    }
-                  }}
-                  error={!!errors?.entity_type}
-                />
-              )}
-            />
+            <Input label="Роут" {...register("route")} error={!!errors?.route} />
           </div>
           <div className="flex-1">
             <Controller
@@ -131,9 +82,9 @@ const OffcanvasForm: FC<{ offcanvas?: OffcanvasEntity }> = ({ offcanvas }) => {
                   name={name}
                   label="Что отображаем"
                   placeholder="Оберіть"
-                  isLoading={isEntityIdLoading}
-                  options={getEntityIdOptions()}
-                  value={getEntityIdOptions()?.find(c => c.value === value) ?? null}
+                  isLoading={isLoadingOnViewList}
+                  options={viewListOptions}
+                  value={viewListOptions?.find(c => c.value === value) ?? null}
                   onChange={option => option && onChange(option.value)}
                   error={!!errors?.entity_id}
                 />
