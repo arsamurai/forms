@@ -1,6 +1,8 @@
 import { FC } from "react"
 import { Controller, useFormContext } from "react-hook-form"
 
+import { useModalsQuery } from "@services/modals-service"
+import { useOffcanvasListQuery } from "@services/offcanvas-service"
 import {
   ButtonActionTypeEnum,
   TableSchema,
@@ -55,7 +57,64 @@ const ButtonsGroupEntity: FC<TableButtonProps & { columnIndex: number }> = ({
   const { data: webPages, isLoading: isLoadingOnWebPages } = useWebpagesQuery(
     actionType === ButtonActionTypeEnum.GoToPage,
   )
-  const webPagesOptions = formatSelectOptions(webPages)
+  const { data: modals, isLoading: isLoadingOnModals } = useModalsQuery(
+    actionType === ButtonActionTypeEnum.OpenModal,
+  )
+  const { data: offcanvasList, isLoading: isLoadingOnOffcanvasList } = useOffcanvasListQuery(
+    actionType === ButtonActionTypeEnum.Offcanvas,
+  )
+  const isActionLoading = isLoadingOnWebPages || isLoadingOnModals || isLoadingOnOffcanvasList
+
+  const getActionOptions = () => {
+    switch (actionType) {
+      case ButtonActionTypeEnum.GoToPage:
+        return formatSelectOptions(webPages)
+      case ButtonActionTypeEnum.OpenModal:
+        return formatSelectOptions(modals)
+      case ButtonActionTypeEnum.Offcanvas:
+        return formatSelectOptions(offcanvasList)
+      default:
+        return []
+    }
+  }
+
+  const getSpecialField = () => {
+    switch (actionType) {
+      case ButtonActionTypeEnum.SendRequest:
+        return (
+          <div className="flex-1">
+            <Input
+              label="Роут для API"
+              {...register(`columns.${columnIndex}.buttons.${buttonIndex}.api_route`)}
+              error={!!errors?.columns?.[columnIndex]?.buttons?.[buttonIndex]?.api_route}
+            />
+          </div>
+        )
+      case ButtonActionTypeEnum.GoToPage:
+      case ButtonActionTypeEnum.OpenModal:
+      case ButtonActionTypeEnum.Offcanvas:
+        return (
+          <div className="flex-1">
+            <Controller
+              name={`columns.${columnIndex}.buttons.${buttonIndex}.action`}
+              control={control}
+              render={({ field: { name, value, onChange } }) => (
+                <Select
+                  name={name}
+                  label="Выбор из списка действия"
+                  placeholder="Оберіть"
+                  isLoading={isActionLoading}
+                  options={getActionOptions()}
+                  value={getActionOptions()?.find(c => c.value === Number(value)) ?? null}
+                  onChange={option => option && onChange(option.value)}
+                  error={!!errors?.columns?.[columnIndex]?.buttons?.[buttonIndex]?.action}
+                />
+              )}
+            />
+          </div>
+        )
+    }
+  }
 
   const handleChangeShowAlert = () => {
     setValue(
@@ -171,33 +230,7 @@ const ButtonsGroupEntity: FC<TableButtonProps & { columnIndex: number }> = ({
                 )}
               />
             </div>
-            {actionType === ButtonActionTypeEnum.SendRequest && (
-              <Input
-                label="Роут для API"
-                {...register(`columns.${columnIndex}.buttons.${buttonIndex}.api_route`)}
-                error={!!errors?.columns?.[columnIndex]?.buttons?.[buttonIndex]?.api_route}
-              />
-            )}
-            {actionType === ButtonActionTypeEnum.GoToPage && (
-              <div className="flex-1">
-                <Controller
-                  name={`columns.${columnIndex}.buttons.${buttonIndex}.action`}
-                  control={control}
-                  render={({ field: { name, value, onChange } }) => (
-                    <Select
-                      name={name}
-                      label="Выбор из списка действия"
-                      placeholder="Оберіть"
-                      isLoading={isLoadingOnWebPages}
-                      options={webPagesOptions}
-                      value={webPagesOptions?.find(c => c.value === Number(value))}
-                      onChange={option => option && onChange(option.value)}
-                      error={!!errors?.columns?.[columnIndex]?.buttons?.[buttonIndex]?.action}
-                    />
-                  )}
-                />
-              </div>
-            )}
+            {getSpecialField()}
           </div>
           <div className="flex gap-5">
             <div className="w-full max-w-[786px]">
