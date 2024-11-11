@@ -2,6 +2,7 @@ import { FC } from "react"
 import { Controller, useFormContext } from "react-hook-form"
 
 import { useModalsQuery } from "@services/modals-service"
+import { useOffcanvasListQuery } from "@services/offcanvas-service"
 import {
   ButtonActionTypeEnum,
   TableSchema,
@@ -55,7 +56,10 @@ const TableButton: FC<TableButtonProps> = ({ buttonIndex, removeButton, moveButt
   const { data: modals, isLoading: isLoadingOnModals } = useModalsQuery(
     actionType === ButtonActionTypeEnum.OpenModal,
   )
-  const isActionLoading = isLoadingOnWebPages || isLoadingOnModals
+  const { data: offcanvasList, isLoading: isLoadingOnOffcanvasList } = useOffcanvasListQuery(
+    actionType === ButtonActionTypeEnum.Offcanvas,
+  )
+  const isActionLoading = isLoadingOnWebPages || isLoadingOnModals || isLoadingOnOffcanvasList
 
   const getActionOptions = () => {
     switch (actionType) {
@@ -63,6 +67,8 @@ const TableButton: FC<TableButtonProps> = ({ buttonIndex, removeButton, moveButt
         return formatSelectOptions(webPages)
       case ButtonActionTypeEnum.OpenModal:
         return formatSelectOptions(modals)
+      case ButtonActionTypeEnum.Offcanvas:
+        return formatSelectOptions(offcanvasList)
       default:
         return []
     }
@@ -82,6 +88,7 @@ const TableButton: FC<TableButtonProps> = ({ buttonIndex, removeButton, moveButt
         )
       case ButtonActionTypeEnum.GoToPage:
       case ButtonActionTypeEnum.OpenModal:
+      case ButtonActionTypeEnum.Offcanvas:
         return (
           <div className="flex-1">
             <Controller
