@@ -27,7 +27,7 @@ export const tabSchema = z.object({
   icon: z.string().min(1),
   entity_id: z.number().min(1),
   params: z.string().min(1),
-  tab_url: z.string().min(1),
+  tab_url: z.string().min(2),
 })
 
 export const blockSchema = z

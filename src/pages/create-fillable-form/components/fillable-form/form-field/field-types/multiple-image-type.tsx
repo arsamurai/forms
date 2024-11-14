@@ -3,8 +3,7 @@ import { Controller, useFormContext } from "react-hook-form"
 
 import { FillableFormSchema } from "@services/fillable-forms-service"
 
-import { Input, Select } from "@shared/ui/fields"
-import { MaskInput } from "@shared/ui/fields/input"
+import { Input, MaskInput, Select } from "@shared/ui/fields"
 
 import { fileTypesArray } from "./constants/file-types-array"
 import { folderHierarchyArray } from "./constants/folder-hierarchy-array"

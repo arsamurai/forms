@@ -4,8 +4,7 @@ import { Controller, useFormContext } from "react-hook-form"
 import { TableSchema } from "@services/tables-service"
 
 import { Button } from "@shared/ui/buttons"
-import { Checkbox, Input, Select } from "@shared/ui/fields"
-import { MaskInput } from "@shared/ui/fields/input"
+import { Checkbox, Input, MaskInput, Select } from "@shared/ui/fields"
 
 import PlusIcon from "@assets/icons/plus.svg"
 

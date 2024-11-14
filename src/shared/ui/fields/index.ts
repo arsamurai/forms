@@ -1,3 +1,3 @@
 export { Checkbox } from "./checkbox"
-export { Input } from "./input"
+export { Input, MaskInput } from "./input"
 export { Select } from "./select"

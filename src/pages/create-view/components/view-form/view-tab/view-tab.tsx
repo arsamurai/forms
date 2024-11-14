@@ -10,7 +10,7 @@ import {
 } from "@services/view-service"
 
 import { Button } from "@shared/ui/buttons"
-import { Input, Select } from "@shared/ui/fields"
+import { Input, MaskInput, Select } from "@shared/ui/fields"
 import { IconsPicker } from "@shared/ui/icons-picker"
 import { Typography } from "@shared/ui/typography"
 import { formatSelectOptions } from "@shared/utils/format-select-options"
@@ -106,10 +106,28 @@ const ViewTab: FC<ViewTabProps> = ({ tabIndex, removeTab, moveTab }) => {
               />
             </div>
             <div className="flex-1">
-              <Input
-                label="Url таба"
-                {...register(`tabs.${tabIndex}.tab_url`)}
-                error={!!errors?.tabs?.[tabIndex]?.tab_url}
+              <Controller
+                name={`tabs.${tabIndex}.tab_url`}
+                control={control}
+                render={({ field: { name, value, onChange } }) => (
+                  <MaskInput
+                    unmask
+                    label="Url таба"
+                    name={name}
+                    value={value}
+                    mask={`#${Array(20).fill("").join("@")}`}
+                    onAccept={value => {
+                      if (value.startsWith("#")) onChange(value)
+                      else onChange(`#${value}`)
+                    }}
+                    definitions={{
+                      "@": {
+                        mask: /^[a-zA-Z0-9_-]$/,
+                      },
+                    }}
+                    error={!!errors?.tabs?.[tabIndex]?.tab_url}
+                  />
+                )}
               />
             </div>
           </div>
