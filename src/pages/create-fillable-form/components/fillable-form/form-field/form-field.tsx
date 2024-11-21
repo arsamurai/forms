@@ -25,6 +25,7 @@ import CloseIcon from "@assets/icons/close.svg"
 import { fieldsTypesArray } from "./constants/fields-types-array"
 import {
   ImageType,
+  MultiInputType,
   MultipleImageType,
   SelectType,
   TextEditorType,
@@ -133,6 +134,7 @@ const FormField: FC<FormFieldProps> = ({ containerIndex, fieldIndex, removeField
     [FieldTypeEnum.Select]: SelectType,
     [FieldTypeEnum.Image]: ImageType,
     [FieldTypeEnum.MultiImage]: MultipleImageType,
+    [FieldTypeEnum.MultiInput]: MultiInputType,
   }
 
   const Field = fieldType ? FieldVariant[fieldType] : null
@@ -172,7 +174,7 @@ const FormField: FC<FormFieldProps> = ({ containerIndex, fieldIndex, removeField
             </div>
             <div className="w-48">
               <Input
-                label="Размер"
+                label="Classname"
                 placeholder="col-lg-3 col-md-6"
                 {...register(`containers.${containerIndex}.fields.${fieldIndex}.size`)}
                 error={!!errors?.containers?.[containerIndex]?.fields?.[fieldIndex]?.size}

@@ -126,7 +126,7 @@ const ViewBlock: FC<ViewBlockProps> = ({ blockIndex, removeBlock, moveBlock }) =
             </div>
             <div className="w-48">
               <Input
-                label="Размер"
+                label="Classname"
                 placeholder="col-lg-3 col-md-6"
                 {...register(`blocks.${blockIndex}.size`)}
                 error={!!errors?.blocks?.[blockIndex]?.size}

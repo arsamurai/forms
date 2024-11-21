@@ -7,4 +7,5 @@ export const fieldsTypesArray = [
   { value: FieldTypeEnum.Select, label: "Селект" },
   { value: FieldTypeEnum.Image, label: "Изображение" },
   { value: FieldTypeEnum.MultiImage, label: "Множественное добавление изображений" },
+  { value: FieldTypeEnum.MultiInput, label: "Множественный текстовый инпут" },
 ]

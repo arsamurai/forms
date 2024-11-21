@@ -23,6 +23,7 @@ export enum FieldTypeEnum {
   Select = "select",
   Image = "image",
   MultiImage = "multi_image",
+  MultiInput = "multi_input",
 }
 
 const ValidatorsTypeSchema = z.nativeEnum(ValidatorsEnum)
@@ -58,7 +59,7 @@ const fieldSchema = z
     file_types: z.array(ImageTypeSchema).nonempty().nullable().optional(),
   })
   .superRefine((data, ctx) => {
-    if (data.type === "text_input") {
+    if (data.type === "text_input" || data.type === "multi_input") {
       if (!data.placeholder) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,

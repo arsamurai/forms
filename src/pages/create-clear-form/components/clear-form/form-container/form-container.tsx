@@ -116,7 +116,7 @@ const FormContainer: FC<FormContainerProps> = ({
         </div>
         <div className="w-48">
           <Input
-            label="Размер"
+            label="Classname"
             placeholder="col-lg-6 col-md-6"
             {...register(`containers.${containerIndex}.size`)}
             error={!!errors?.containers?.[containerIndex]?.size}
